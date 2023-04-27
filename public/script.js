@@ -3,7 +3,7 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement("video");
 myVideo.muted = true;
 var peer = new Peer(undefined, {
-    path: "/ peerjs",
+    path: "/peerjs",
     host: "/",
     port: "3030",
 });
@@ -35,7 +35,7 @@ const connectToNewUser = (userId, stream) => {
     });
 };
 peer.on("open", (id) => {
-    socket.emit("join - room", ROOM_ID, id);
+    socket.emit("join-room", ROOM_ID, id);
 });
 const addVideoStream = (video, stream) => {
     video.srcObject = stream;

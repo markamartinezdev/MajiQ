@@ -14,12 +14,15 @@ app.get("/", (req, res) => {
   res.redirect(`/${uuidv4()}`);
 });
 app.get("/:room", (req, res) => {
-  res.render("room", { roomId: req.param.room });
+  res.render("room", { roomId: req.params.room });
 });
 io.on("connection", (socket) => {
-  socket.on("join - room", (roomId, userId) => {
+  socket.on("join-room", (roomId, userId) => {
     socket.join(roomId);
-    socket.to(roomId).broadcast.emit("user - connected", userId);
+    const broadcast = socket.to(roomId)
+    broadcast.emit("user-connected", userId);
   });
 });
-server.listen(3030);
+server.listen(3030, () => {
+  console.log('connected')
+});
