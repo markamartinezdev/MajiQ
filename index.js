@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.redirect(`/${uuidv4()}`);
 });
 app.get("/:room", (req, res) => {
-  res.render("room", { roomId: req.params.room });
+  res.render("room", { roomId: req.params.room, port: Number(process.env.NODE_PROD) ? '' : PORT });
 });
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, userId) => {

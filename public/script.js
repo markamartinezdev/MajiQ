@@ -5,6 +5,7 @@ myVideo.muted = true;
 var peer = new Peer(undefined, {
     path: "/peerjs",
     host: "/",
+    port: PORT
 });
 let myVideoStream;
 navigator.mediaDevices
@@ -26,6 +27,9 @@ navigator.mediaDevices
             });
         });
         socket.on("user-connected", (userId) => {
+            let key = sessionStorage.getItem("userId")
+            key = key ?? userId
+            sessionStorage.setItem("userId", key)
             connectToNewUser(userId, stream);
         });
     });
@@ -37,7 +41,11 @@ const connectToNewUser = (userId, stream) => {
     });
 };
 peer.on("open", (id) => {
-    socket.emit("join-room", ROOM_ID, id);
+    // Get saved data from sessionStorage
+    let key = sessionStorage.getItem("userId")
+    key = key ?? id
+    sessionStorage.setItem("userId", key)
+    socket.emit("join-room", ROOM_ID, key);
 });
 const addVideoStream = (video, stream) => {
     video.srcObject = stream;
