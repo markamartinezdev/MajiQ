@@ -8,6 +8,7 @@ const { ExpressPeerServer } = require("peer");
 const peerServer = ExpressPeerServer(server, {
   debug: true,
 });
+const PORT = process.env.NODE_PORT ?? 3030
 app.use("/peerjs", peerServer);
 app.use(express.static("public"));
 app.get("/", (req, res) => {
@@ -23,6 +24,6 @@ io.on("connection", (socket) => {
     broadcast.emit("user-connected", userId);
   });
 });
-server.listen(3030, () => {
+server.listen(PORT, () => {
   console.log('connected')
 });
