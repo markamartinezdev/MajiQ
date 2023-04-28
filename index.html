@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
-<body>
-  <img id="image">
-  
-  <! --Connecting html page to socket.io -->
-  <script src=
-"https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js">
-  </script>
-  <script>
-    // Connecting socket.io to localhost 
-    const socket = io.connect('http://localhost:3030');
-  
-    // listening to the image event in index.js
-    socket.on('image', (data)=>{
-        console.log('data', data);
-  
-      // Now we are getting the image and 
-      // displaying it via img tag
-      const imageEle = document.getElementById('image');
-  
-      // Also we are decoding the base64 encoding 
-      // set in javascript file.
-      imageEle.src = `data:image/jpeg;base64,${image}`;
-    });
-  </script>
-</body>
+	<body>
+		<img id="image" />
+
+		<! --Connecting html page to socket.io -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+		<script>
+			// Connecting socket.io to localhost
+			const socket = io.connect("https://mtg.pingadulce.com");
+
+			// listening to the image event in index.js
+			socket.on("image", (data) => {
+				console.log("data", data);
+
+				// Now we are getting the image and
+				// displaying it via img tag
+				const imageEle = document.getElementById("image");
+
+				// Also we are decoding the base64 encoding
+				// set in javascript file.
+				imageEle.src = `data:image/jpeg;base64,${image}`;
+			});
+		</script>
+	</body>
 </html>
