@@ -1,7 +1,8 @@
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
-const myVideo = document.createElement("video");
-myVideo.muted = true;
+let Template = document.getElementById('cell-template')
+let template = Template.content.valueOf()
+let myVideo = null
 var peer = new Peer(undefined, {
     path: "/peerjs",
     host: "/",
@@ -18,12 +19,13 @@ navigator.mediaDevices
     })
     .then((stream) => {
         myVideoStream = stream;
-        addVideoStream(myVideo, stream);
+        myVideo = template.querySelector('video');
+        addVideoStream(template, stream);
         peer.on("call", (call) => {
             call.answer(stream);
-            const video = document.createElement("video");
+            template = JSON.parse(JSON.stringify(Template.content))
             call.on("stream", (userVideoStream) => {
-                addVideoStream(video, userVideoStream);
+                addVideoStream(template, userVideoStream);
             });
         });
         socket.on("user-connected", (userId) => {
@@ -35,9 +37,10 @@ navigator.mediaDevices
     });
 const connectToNewUser = (userId, stream) => {
     const call = peer.call(userId, stream);
-    const video = document.createElement("video");
+    template = JSON.parse(JSON.stringify(Template.content))
+
     call.on("stream", (userVideoStream) => {
-        addVideoStream(video, userVideoStream);
+        addVideoStream(template, userVideoStream);
     });
 };
 peer.on("open", (id) => {
@@ -47,10 +50,23 @@ peer.on("open", (id) => {
     sessionStorage.setItem("userId", key)
     socket.emit("join-room", ROOM_ID, key);
 });
-const addVideoStream = (video, stream) => {
+const addVideoStream = (template, stream) => {
+    const video = template.querySelector('video');
+    video.muted = true;
     video.srcObject = stream;
+    videoGrid.append(template);
     video.addEventListener("loadedmetadata", () => {
         video.play();
-        videoGrid.append(video);
     });
 };
+
+const toggleMute = (element) => {
+    if (element.classList.contains('active')) {
+        element.classList.remove('active')
+    }
+    else {
+        element.classList.add('active')
+    }
+
+    myVideo.mute = !myVideo.mute
+}

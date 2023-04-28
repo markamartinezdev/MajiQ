@@ -29,9 +29,9 @@
             <div class="options__button">
               <i class="fa fa-video-camera" aria-hidden="true"></i>
             </div>
-          <div class="options__button">
+          <button class="options__button" onclick="toggleMute(this)">
               <i class="fa fa-microphone" aria-hidden="true"></i>
-          </div>
+          </button>
          </div>
          <div class="options__right">
            <div class="options__button background__red">
@@ -52,6 +52,19 @@
        </div>
       </div>
     </div>
+    <template id="cell-template">
+      <div class="cell">
+        <div class="cell_header">
+          <p class="cell_name">Player name</p>
+          <div class="cell_points">
+            <span>-</span>
+            <span>0</span>
+            <span>+</span>
+          </div>
+        </div>
+        <video class="cell_video"></video>
+      </div>
+    </template>
   </body>
   <script src="script.js"></script>
 </html>
