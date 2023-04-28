@@ -10,7 +10,10 @@ let myVideoStream;
 navigator.mediaDevices
     .getUserMedia({
         audio: true,
-        video: true,
+        video: {
+            facingMode: "environment",
+            aspectRatio: { 'exact: 1.7777777778' }
+        }
     })
     .then((stream) => {
         myVideoStream = stream;
