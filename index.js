@@ -26,6 +26,6 @@ app.get("/", (req, res) => {
 //     broadcast.emit("user-connected", userId);
 //   });
 // });
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log('connected on port: ' + PORT)
 });
