@@ -13,7 +13,8 @@ const PORT = process.env.NODE_PORT ?? 3030
 app.use("/peerjs", peerServer);
 app.use(express.static("public"));
 app.get("/", (req, res) => {
-  res.redirect(`/${uuidv4()}`);
+  res.send('Testing')
+  // res.redirect(`/${uuidv4()}`);
 });
 app.get("/:room", (req, res) => {
   res.render("room", { roomId: req.params.room });
