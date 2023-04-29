@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  mtgtable:
+    image: docker.io/library/mtgtable
+    networks:
+      - nginx_default
+    ports:
+      - 3030:3030
+    restart: 'on-failure:10'
+    container_name: majiq
+  scylla:
+    command: '--developer-mode=0'
+    image: scylladb/scylla
+    networks:
+      - nginx_default
+    volumes:
+      - /var/lib/scylla:/var/lib/scylla
+    container_name: scylla
+    ports:
+      - 7000-7001:7000-7001
+      - 9042:9042
+      - 9160:9160
+      - 10000:10000
+networks:
+  nginx_default:
+    external: true
