@@ -55,12 +55,10 @@
     <template id="cell-template">
       <div class="cell">
         <div class="cell_header">
-          <p class="cell_name">Player name</p>
+          <p class="cell_name" contenteditable="true">Player Name</p>
           <div class="cell_points">
-            <span>-</span>
-            <span>0</span>
-            <span>+</span>
-          </div>
+            <input type="number" class="box" value="40" min="0" max="999">
+          </div>          
         </div>
         <video class="cell_video"></video>
       </div>

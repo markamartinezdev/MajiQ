@@ -144,3 +144,35 @@ video {
     justify-content: space-between;
     border-radius: 1rem 1rem 0 0;
 }
+
+.cell_points {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    font-weight: bold;
+    color: white;
+    background-color: transparent;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .cell_name {
+    position: relative;
+    width: 25%;
+    height: 25%;
+    padding: 0;
+    border: none;
+    font-weight: bold;
+    color: white;
+    background-color: transparent;
+    font-size: 20px;
+    text-align: left;
+  }
+  

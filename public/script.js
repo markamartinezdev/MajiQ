@@ -70,3 +70,22 @@ const toggleMute = (element) => {
 
     myVideo.mute = !myVideo.mute
 }
+
+const box = document.querySelector(".box");
+
+document.addEventListener("keydown", (event) => {
+  // Check if the key pressed is up or down arrow
+  if (event.keyCode === 38 || event.keyCode === 40) {
+    // Prevent the default action of the key press
+    event.preventDefault();
+
+    // Check if the target of the event is the box
+    if (event.target === box) {
+      // Step the box up or down
+      box.stepUp(event.keyCode === 38 ? 1 : -1);
+    } else {
+      // Step the default box up or down
+      document.querySelector(".box").stepUp(event.keyCode === 38 ? 1 : -1);
+    }
+  }
+});
