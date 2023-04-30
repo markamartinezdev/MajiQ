@@ -145,8 +145,12 @@ const handleDeath = () => {
       const box = document.querySelector('.box');
       if (!box) return;
   
-      box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
-
+      if (event.ctrlKey){
+        box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 10 : -10);
+      }
+      else{
+        box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
+      }
         if (myVideo && !myVideo.paused) {
           if (box.value <= 0) {
             box.value = 0;
