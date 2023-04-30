@@ -104,7 +104,7 @@ const toggleMute = (element) => {
 };
 
 const toggleReset = (element) => {
-  const box = document.querySelector('.box');
+  const box = document.querySelector('.cell_playerlife_value');
   element.classList.add('active');
 
   box.value = Math.min(Number(box.value) + 40, 40);
@@ -145,7 +145,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
     event.preventDefault();
 
-    const box = document.querySelector('.box');
+    const box = document.querySelector('.cell_playerlife_value');
     if (!box) return;
 
     box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
@@ -154,15 +154,15 @@ document.addEventListener('keydown', (event) => {
 });
 
 function changeInputColor(input, value) {
-  input.classList.remove("box-red", "box-yellow", "box-white", "box-green");
+  input.classList.remove("cell_playerlife_value-red", "cell_playerlife_value-yellow", "cell_playerlife_value-white", "cell_playerlife_value-green");
   if (value <= 10) {
-    input.classList.add("box-red");
+    input.classList.add("cell_playerlife_value-red");
   } else if (value >= 11 && value <= 20) {
-    input.classList.add("box-yellow");
+    input.classList.add("cell_playerlife_value-yellow");
   } else if (value >= 40) {
-    input.classList.add("box-green");
+    input.classList.add("cell_playerlife_value-green");
   } else {
-    input.classList.add("box-white");
+    input.classList.add("cell_playerlife_value-white");
   }
 }
 
