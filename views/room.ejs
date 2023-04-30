@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MajiQ</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>MajiQ - Where card?</title>
+  <link link rel="stylesheet" type="text/css" href="style.css" />
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
   <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
@@ -28,11 +28,14 @@
       </div>
       <div class="options">
         <div class="options__left">
-          <div class="options__button">
+          <button class="options__button" id="toggle-video-button" onclick="toggleVideo(this)">
             <i class="fa fa-video-camera" aria-hidden="true"></i>
-          </div>
+          </button>
           <button class="options__button" onclick="toggleMute(this)">
             <i class="fa fa-microphone" aria-hidden="true"></i>
+          </button>
+          <button class="options__button" onclick="toggleReset(this)">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
           </button>
         </div>
         <div class="options__right">

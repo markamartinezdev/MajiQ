@@ -5,9 +5,9 @@
 }
 
 :root {
-    --main-darklg: #1d2635;
-    --main-dark: #161d29;
-    --primary-color: #2f80ec;
+    --main-darklg: #240077;
+    --main-dark: #1a0134;
+    --primary-color: #ae5106;
     --main-light: #eeeeee;
     font-family: “Poppins”, sans-serif;
 }
@@ -28,11 +28,11 @@
 
 .logo {
     height: 100%;
-  }
+}
 
-  .logo img {
+.logo img {
     max-height: 100%;
-  }
+}
 
 .main {
     overflow: hidden;
@@ -133,9 +133,9 @@ video {
 
 .cell {
     position: relative;
-  }
-  
-  .cell_header {
+}
+
+.cell_header {
     position: absolute;
     display: flex;
     flex-wrap: wrap;
@@ -148,16 +148,9 @@ video {
     color: #fff;
     justify-content: space-between;
     border-radius: 1rem 1rem 0 0;
-  }
-  
-  .cell_points {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .cell_name {
+}
+
+.cell_name {
     position: relative;
     width: 60%;
     height: 40%;
@@ -168,9 +161,9 @@ video {
     background-color: transparent;
     font-size: 22px;
     text-align: left;
-  }
-  
-  .cell_card {
+}
+
+.cell_card {
     position: relative;
     width: 60%;
     height: 40%;
@@ -181,17 +174,65 @@ video {
     background-color: transparent;
     font-size: 16px;
     text-align: left;
-  }
-  
-  .box {
+}
+
+.cell_points .box {
     position: relative;
     width: 60%;
     height: 100%;
     padding: 0;
     border: none;
     font-weight: bold;
-    color: white;
     background-color: transparent;
     font-size: 26px;
     text-align: center;
 }
+
+.box-red {
+    color: red !important;
+}
+
+.box-yellow {
+    color: yellow !important;
+}
+
+.box-white {
+    color: white !important;
+}
+
+.box-green {
+    color: rgb(3, 197, 39) !important;
+}
+
+.video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 50%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    z-index: 2;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .overlay p {
+    color: red;
+    font-weight: bold;
+    font-size: 4rem;
+    text-align: center;
+  }
+  
