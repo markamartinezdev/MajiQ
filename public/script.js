@@ -102,12 +102,8 @@ const toggleReset = (element) => {
     const box = document.querySelector('.box');
     element.classList.add('active');
     
-    if (box.value <= 0) {
-      location.reload();
-    } else {
-      box.value = 40;
+    box.value = Math.min(Number(box.value) + 40, 40);
       changeInputColor(box, box.value);
-    }
   };
   
 
@@ -120,18 +116,30 @@ document.addEventListener('keydown', (event) => {
 
     box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
 
-    if (myVideo && !myVideo.paused) {
+    const handleDeath = () => {
+        const deathButton = document.querySelector('#death-button');
+        const deathScreen = document.createElement('div');
+        deathScreen.classList.add('death-screen');
+        deathScreen.innerText = 'YOU DIED!';
+        deathScreen.style.width = '643.55px';
+        deathScreen.style.height = '362px';
+        deathScreen.style.position = 'absolute';
+        deathScreen.style.top = '0';
+        deathScreen.style.left = '0';
+        deathScreen.style.background = 'rgba(0, 0, 0, 0.7)';
+        deathScreen.style.color = 'red';
+        deathScreen.style.display = 'flex';
+        deathScreen.style.alignItems = 'center';
+        deathScreen.style.justifyContent = 'center';
+        document.querySelector('.cell').appendChild(deathScreen);
+        deathButton.style.display = 'none';
+        toggleVideo(videoButton);
+      };
+      
+      if (myVideo && !myVideo.paused) {
         if (box.value <= 0) {
           box.value = 0;
-          if (!document.querySelector('.death-screen')) {
-            toggleVideo(videoButton);
-            const deathScreen = document.createElement('div');
-            deathScreen.classList.add('death-screen');
-            deathScreen.innerText = 'YOU DIED!';
-            deathScreen.style.width = `640px`;
-            deathScreen.style.height = `480px`;
-            document.querySelector('.cell').appendChild(deathScreen);
-          }
+          handleDeath();
         } else if (document.querySelector('.death-screen')) {
           document.querySelector('.death-screen').remove();
           if (myVideo.paused) {
@@ -141,10 +149,6 @@ document.addEventListener('keydown', (event) => {
           toggleVideo(videoButton);
         }
       }
-      
-      
-      
-      
       
 
     changeInputColor(box, box.value);
