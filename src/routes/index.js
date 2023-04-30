@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const mgt = require('../game/cards.js')
 
 const PORT = process.env.NODE_PORT ?? 3030
-router.get("/:room", (req, res, next) => {
+router.get("/room/:room", (req, res, next) => {
     res.render("room", { roomId: req.params.room, port: Number(process.env.NODE_PROD) ? '' : PORT });
 });
 
@@ -15,9 +16,11 @@ router.post('/', async (req, res, next) => {
     }
 });
 // Get all items
-router.get('/idk', async (_, res, next) => {
+router.get('/card', async (req, res, next) => {
     try {
-        res.json({ message: 'Get all item' });
+        const searchTerm = req.query.searchTerm
+        const result = await mgt.searchCard(searchTerm)
+        res.json({ message: 'Got cards', data: result });
     } catch (err) {
         next(err);
     }
