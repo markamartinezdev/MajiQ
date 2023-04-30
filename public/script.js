@@ -21,11 +21,11 @@ navigator.mediaDevices
   })
   .then((stream) => {
     myVideoStream = stream;
-    myVideo = template.querySelector('video');
+    template = Template.innerHTML
     addVideoStream(template, stream);
     peer.on("call", (call) => {
       call.answer(stream);
-      template = JSON.parse(JSON.stringify(Template.content))
+      template = Template.innerHTML
       call.on("stream", (userVideoStream) => {
         addVideoStream(template, userVideoStream);
       });
@@ -39,8 +39,7 @@ navigator.mediaDevices
   });
 const connectToNewUser = (userId, stream) => {
   const call = peer.call(userId, stream);
-  template = JSON.parse(JSON.stringify(Template.content))
-
+  template = Template.innerHTML
   call.on("stream", (userVideoStream) => {
     addVideoStream(template, userVideoStream);
   });
@@ -51,11 +50,13 @@ peer.on("open", (id) => {
   playerId = playerId ?? id
   sessionStorage.setItem("userId", playerId)
   playerName = document.querySelector(`[player-id="${playerId}"]`) ??
-    socket.emit("join-room", ROOM_ID, playerId, playerName);
+    socket.emit("join-room", ROOM_ID, id, playerName);
 });
 
 const addVideoStream = (template, stream) => {
-  const video = template.querySelector('video');
+  const videoCell = document.createElement('div')
+  videoCell.innerHTML = template
+  const video = videoCell.querySelector('video');
   if (!stream) {
     video.style.display = 'none';
     video.setAttribute('player-id', playerId)
@@ -70,7 +71,7 @@ const addVideoStream = (template, stream) => {
       video.play();
     });
   }
-  videoGrid.append(template);
+  videoGrid.append(videoCell);
 };
 
 
