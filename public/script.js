@@ -48,7 +48,7 @@ peer.on("open", (id) => {
     let key = sessionStorage.getItem("userId")
     key = key ?? id
     sessionStorage.setItem("userId", key)
-    socket.emit("join-room", ROOM_ID, id);
+    socket.emit("join-room", ROOM_ID, id, playerName);
 });
 
 const addVideoStream = (template, stream) => {
@@ -141,12 +141,6 @@ document.addEventListener('keydown', (event) => {
           toggleVideo(videoButton);
         }
       }
-      
-      
-      
-      
-      
-
     changeInputColor(box, box.value);
   }
 });
