@@ -8,6 +8,7 @@ var peer = new Peer(undefined, {
   host: "/",
   port: PORT
 });
+const playerIds = []
 let playerName = ''
 let playerId = ''
 let myVideoStream;
@@ -31,9 +32,6 @@ navigator.mediaDevices
       });
     });
     socket.on("user-connected", (userId) => {
-      playerId = sessionStorage.getItem("userId")
-      playerId = playerId ?? userId
-      sessionStorage.setItem("userId", playerId)
       connectToNewUser(userId, stream);
     });
   });
@@ -41,37 +39,42 @@ const connectToNewUser = (userId, stream) => {
   const call = peer.call(userId, stream);
   template = Template.innerHTML
   call.on("stream", (userVideoStream) => {
-    addVideoStream(template, userVideoStream);
+    if (!playerIds.includes(userId)) {
+      playerIds.push(userId)
+      addVideoStream(template, userVideoStream);
+    }
   });
 };
 peer.on("open", (id) => {
   // Get saved data from sessionStorage
-  playerId = sessionStorage.getItem("userId")
-  playerId = playerId ?? id
-  sessionStorage.setItem("userId", playerId)
-  playerName = document.querySelector(`[player-id="${playerId}"]`) ??
-    socket.emit("join-room", ROOM_ID, id, playerName);
+  socket.emit("join-room", ROOM_ID, id);
 });
 
 const addVideoStream = (template, stream) => {
   const videoCell = document.createElement('div')
   videoCell.innerHTML = template
   const video = videoCell.querySelector('video');
-  if (!stream) {
-    video.style.display = 'none';
-    video.setAttribute('player-id', playerId)
-    const blankBox = document.createElement('div');
-    blankBox.classList.add('blank-box');
-    template.appendChild(blankBox);
-  } else {
-    video.muted = true;
-    video.srcObject = stream;
-    video.setAttribute('player-id', playerId)
-    video.addEventListener("loadedmetadata", () => {
-      video.play();
-    });
+  video.srcObject = stream;
+  // video.setAttribute('player-id', playerId)
+  video.addEventListener("loadedmetadata", () => {
+    video.play();
     videoGrid.append(videoCell);
-  }
+  });
+  // if (!stream) {
+  //   video.style.display = 'none';
+  //   // video.setAttribute('player-id', playerId)
+  //   const blankBox = document.createElement('div');
+  //   blankBox.classList.add('blank-box');
+  //   template.appendChild(blankBox);
+  // } else {
+  //   video.muted = true;
+  //   video.srcObject = stream;
+  //   // video.setAttribute('player-id', playerId)
+  //   video.addEventListener("loadedmetadata", () => {
+  //     video.play();
+  //     videoGrid.append(videoCell);
+  //   });
+  // }
 };
 
 
@@ -167,3 +170,36 @@ function changeInputColor(input, value) {
   }
 }
 
+// Collapse Chat/Game Log
+function toggleCollapse(element) {
+  const target = element.dataset.target;
+  const isCollapsed = element.classList.contains('collapsed');
+
+  if (isCollapsed) {
+    element.classList.remove('collapsed');
+    document.getElementById(target).style.display = 'block';
+    button.classList.toggle("active");
+  } else {
+    element.classList.add('collapsed');
+    document.getElementById(target).style.display = 'none';
+    button.classList.toggle("active");
+  }
+}
+
+// Add event listener to collapse button
+document.getElementById('collapse-button').addEventListener('click', toggleCollapse);
+
+//Button Customization
+function toggleCollapse(element, button) {
+  if (element.classList.contains('collapsed')) {
+    element.classList.remove('collapsed');
+    if (button) {
+      button.innerHTML = '<span><i class="fas fa-comment-slash"></i></span>';
+    }
+  } else {
+    element.classList.add('collapsed');
+    if (button) {
+      button.innerHTML = '<span><i class="fas fa-comment"></i></i></span>';
+    }
+  }
+}
