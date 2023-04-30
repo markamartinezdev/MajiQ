@@ -53,32 +53,45 @@ peer.on("open", (id) => {
 
 const addVideoStream = (template, stream) => {
     const video = template.querySelector('video');
-    video.muted = true;
-    video.srcObject = stream;
-    videoGrid.append(template);
-    video.addEventListener("loadedmetadata", () => {
+    if (!stream) {
+      video.style.display = 'none';
+      const blankBox = document.createElement('div');
+      blankBox.classList.add('blank-box');
+      template.appendChild(blankBox);
+    } else {
+      video.muted = true;
+      video.srcObject = stream;
+      video.addEventListener("loadedmetadata", () => {
         video.play();
-    });
-};
+      });
+    }
+    videoGrid.append(template);
+  };
+  
 
 const videoButton = document.getElementById('toggle-video-button');
 videoButton.classList.add('active');
 
 const toggleVideo = (element) => {
-  const placeholder = document.querySelector('.placeholder');
-
-  if (element.classList.contains('active')) {
-    element.classList.remove('active');
-    myVideo?.pause();
-    myVideo?.style.setProperty('display', 'none');
-    placeholder.style.display = 'block';
-  } else {
-    element.classList.add('active');
-    myVideo?.play();
-    myVideo?.style.setProperty('display', 'block');
-    placeholder.style.display = 'none';
-  }
-};
+    const placeholder = document.querySelector('.placeholder');
+    const video = document.querySelector('video');
+  
+    if (element.classList.contains('active')) {
+      element.classList.remove('active');
+      myVideo?.pause();
+      video.style.display = 'none';
+      if (placeholder) {
+        placeholder.style.display = 'block';
+      }
+    } else {
+      element.classList.add('active');
+      myVideo?.play();
+      video.style.display = 'block';
+      if (placeholder) {
+        placeholder.style.display = 'none';
+      }
+    }
+  };
 
 const toggleMute = (element) => {
   element.classList.toggle('active');
@@ -87,12 +100,13 @@ const toggleMute = (element) => {
 
 const toggleReset = (element) => {
     const box = document.querySelector('.box');
-    box.value = 40;
-    changeInputColor(box, box.value);
-    if (element.classList.contains('active')) {
-      element.classList.remove('active');
+    element.classList.add('active');
+    
+    if (box.value <= 0) {
+      location.reload();
     } else {
-      element.classList.add('active');
+      box.value = 40;
+      changeInputColor(box, box.value);
     }
   };
   
@@ -107,20 +121,30 @@ document.addEventListener('keydown', (event) => {
     box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
 
     if (myVideo && !myVideo.paused) {
-        if (box.value <= 0 && !document.querySelector('.overlay')) {
-          toggleVideo(videoButton);
-          const overlay = document.createElement('div');
-          overlay.classList.add('overlay');
-          const message = document.createElement('p');
-          message.innerText = 'YOU DIED!';
-          overlay.appendChild(message);
-          document.querySelector('.cell').appendChild(overlay);
-        }
-        else if (myVideo.paused && document.querySelector('.overlay')) {
-          document.querySelector('.overlay').remove();
+        if (box.value <= 0) {
+          box.value = 0;
+          if (!document.querySelector('.death-screen')) {
+            toggleVideo(videoButton);
+            const deathScreen = document.createElement('div');
+            deathScreen.classList.add('death-screen');
+            deathScreen.innerText = 'YOU DIED!';
+            deathScreen.style.width = `640px`;
+            deathScreen.style.height = `480px`;
+            document.querySelector('.cell').appendChild(deathScreen);
+          }
+        } else if (document.querySelector('.death-screen')) {
+          document.querySelector('.death-screen').remove();
+          if (myVideo.paused) {
+            toggleVideo(videoButton);
+          }
+        } else if (myVideo.paused) {
           toggleVideo(videoButton);
         }
       }
+      
+      
+      
+      
       
 
     changeInputColor(box, box.value);
