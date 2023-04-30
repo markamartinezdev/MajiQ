@@ -36,7 +36,7 @@
 
 .main {
     overflow: hidden;
-    height: 92vh;
+    height: 100%;
     display: flex;
 }
 
@@ -56,7 +56,7 @@
 }
 
 video {
-    height: 25vh;
+    width: 100%;
     border-radius: 1rem;
     object-fit: cover;
     transform: rotateY(180deg);
@@ -126,13 +126,14 @@ video {
 }
 
 #video-grid {
-    display: grid;
+    display: flex;
     justify-content: center;
     grid-template-columns: 1fr 1fr;
 }
 
 .cell {
     position: relative;
+    width: 100%;
 }
 
 .cell_header {
