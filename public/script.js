@@ -127,8 +127,8 @@ const handleDeath = (deathButton) => {
   deathScreen.style.alignItems = 'center';
   deathScreen.style.justifyContent = 'center';
   document.querySelector('.cell').appendChild(deathScreen);
-  deathButton.style.display = 'none';
-  toggleVideo(videoButton);
+  //deathButton.style.display = 'none';
+  //toggleVideo(videoButton);
 };
 
 const toggleDeath = (element) => {
@@ -154,7 +154,7 @@ document.addEventListener('keydown', (event) => {
     else {
       box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
     }
-    changeInputColor(box, box.value);
+    changeInputColor(cell_playerlife, cell_playerlife_value);
   }
 });
 
