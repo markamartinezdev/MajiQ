@@ -2,6 +2,7 @@ require("dotenv").config()
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
+const routes = require('./src/routes/index.js')
 const { v4: uuidv4 } = require("uuid");
 app.set("view engine", "ejs");
 const io = require("socket.io")(server);
@@ -12,11 +13,9 @@ const peerServer = ExpressPeerServer(server, {
 const PORT = process.env.NODE_PORT ?? 3030
 app.use("/peerjs", peerServer);
 app.use(express.static("public"));
+app.use(routes)
 app.get("/", (req, res) => {
   res.redirect(`/${uuidv4()}`);
-});
-app.get("/:room", (req, res) => {
-  res.render("room", { roomId: req.params.room, port: Number(process.env.NODE_PROD) ? '' : PORT });
 });
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, userId) => {

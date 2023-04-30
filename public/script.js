@@ -6,7 +6,7 @@ let myVideo = null
 var peer = new Peer(undefined, {
     path: "/peerjs",
     host: "/",
-    port: PORT
+    port: '3030'
 });
 let myVideoStream;
 navigator.mediaDevices
@@ -48,7 +48,7 @@ peer.on("open", (id) => {
     let key = sessionStorage.getItem("userId")
     key = key ?? id
     sessionStorage.setItem("userId", key)
-    socket.emit("join-room", ROOM_ID, key);
+    socket.emit("join-room", ROOM_ID, id);
 });
 const addVideoStream = (template, stream) => {
     const video = template.querySelector('video');
