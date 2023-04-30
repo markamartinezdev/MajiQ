@@ -1,16 +1,12 @@
 const mtg = require('mtgsdk')
 
-mtg.card.find(3)
-.then(result => {
-    console.log(result.card.name) // "Black Lotus"
-})
+async function searchCard(searchTerm) {
 
-mtg.set.find('AER')
-.then(result => {
-    console.log(result.set.name) // "Aether Revolt"
-})
+    const cards = await mtg.card.where({ name: searchTerm })
+    return cards
 
-card.all({ name: 'Squee', pageSize: 1 })
-.on('data', card => {
-    console.log(card.name)
-})
+}
+
+module.exports = {
+    searchCard
+}

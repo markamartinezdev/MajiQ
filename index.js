@@ -15,7 +15,7 @@ app.use("/peerjs", peerServer);
 app.use(express.static("public"));
 app.use(routes)
 app.get("/", (req, res) => {
-  res.redirect(`/${uuidv4()}`);
+  res.redirect(`/room/${uuidv4()}`);
 });
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, userId) => {
