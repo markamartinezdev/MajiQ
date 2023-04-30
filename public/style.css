@@ -16,6 +16,7 @@
     margin: 0;
     padding: 0;
 }
+
 /* #region Web Header */
 .header {
     display: flex;
@@ -33,6 +34,7 @@
 .logo img {
     max-height: 100%;
 }
+
 /* #endregion */
 
 /* #region Web Body */
@@ -41,6 +43,7 @@
     height: 100%;
     display: flex;
 }
+
 /* #endregion */
 
 /* #region Web Body Left */
@@ -49,6 +52,7 @@
     display: flex;
     flex-direction: column;
 }
+
 /* #endregion */
 /* #region Cameras */
 .videos__group {
@@ -121,7 +125,7 @@ video {
     text-align: left;
 }
 
-.cell_playerlife { 
+.cell_playerlife {
     width: 30%;
     height: 40%;
     padding: 5px;
@@ -172,7 +176,7 @@ video {
     font-weight: bold;
     width: 640px;
     height: 360px;
-  }
+}
 
 .options {
     padding: 1rem;
@@ -241,7 +245,71 @@ video {
 .placeholder {
     width: 640px;
     height: 360px;
+}
+
+.content {
+    position: relative;
   }
+  
+  .main__right {
+    position: relative;
+    padding-left: 20px;
+    /* Add some padding to the left to make room for the button */
+    width: auto;
+    /* set initial height */
+    transition: height 0.3s ease;
+    /* add transition for smooth animation */
+  }
+  
+  .collapse-btn {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    /* Position the button to the left of main__right */
+    width: 20px;
+    /* Set the width of the button */
+    height: 20px;
+    /* Set the height of the button */
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+    transform: rotate(-90deg);
+    /* Rotate the button to make it hang from the left edge */
+  }
+  
+  .collapsed .main__right {
+    width: 0;
+    /* Hide the right content when collapsed */
+    overflow: hidden;
+  }
+  
+  .collapsed .collapse-btn {
+    transform: rotate(90deg);
+    /* Rotate the button to make it point to the right when collapsed */
+  }
+  
+  .collapsed .uncollapse-btn {
+    display: block;
+    /* Show the uncollapse button when collapsed */
+  }
+  
+  .uncollapse-btn {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    /* Position the button to the left of main__right */
+    width: 20px;
+    /* Set the width of the button */
+    height: 20px;
+    /* Set the height of the button */
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+    transform: rotate(90deg);
+    /* Rotate the button to make it hang from the left edge */
+    display: none;
+    /* Hide the button by default */
+  }
+  
 
 /* #endregion */
-  

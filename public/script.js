@@ -167,3 +167,20 @@ function changeInputColor(input, value) {
   }
 }
 
+// Collapse Chat/Game Log
+const content = document.querySelector('.content');
+const collapseBtn = document.querySelector('.collapse-btn');
+const uncollapseBtn = document.querySelector('.uncollapse-btn');
+
+collapseBtn.addEventListener('click', () => {
+  content.classList.toggle('collapsed');
+  // Toggle the collapsed class on the content element
+
+  if (content.classList.contains('collapsed')) {
+    collapseBtn.style.display = 'none';
+    uncollapseBtn.style.display = 'block';
+  } else {
+    collapseBtn.style.display = 'block';
+    uncollapseBtn.style.display = 'none';
+  }
+});
