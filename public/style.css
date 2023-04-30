@@ -81,7 +81,7 @@ video {
 }
 
 .cell_header {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-wrap: wrap;
     top: 0;
@@ -99,7 +99,7 @@ video {
     position: relative;
     width: 60%;
     height: 40%;
-    padding: 5;
+    padding: 5px;
     border: none;
     font-weight: bold;
     color: rgb(107, 2, 213);
@@ -112,7 +112,7 @@ video {
     position: relative;
     width: 60%;
     height: 40%;
-    padding: 5;
+    padding: 5px;
     border: none;
     font-weight: bold;
     color: rgba(70, 181, 222, 0.826);
@@ -121,10 +121,10 @@ video {
     text-align: left;
 }
 
-.cell_playerlife {
-    width: 10%;
+.cell_playerlife { 
+    width: 30%;
     height: 40%;
-    padding: 5;
+    padding: 5px;
     border: none;
     font-weight: bold;
     color: rgb(107, 2, 213);
@@ -141,6 +141,7 @@ video {
     border: none;
     font-weight: bold;
     background-color: transparent;
+    color: #fff;
     font-size: 26px;
     text-align: center;
 }
