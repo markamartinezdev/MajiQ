@@ -95,8 +95,14 @@ video {
     border-radius: 1rem 1rem 0 0;
 }
 
-.cell_name {
+.cell_playername {
     position: relative;
+    float: left;
+}
+
+.cell_playerlife {
+    position: relative;
+    float: right;
     width: 60%;
     height: 40%;
     padding: 5;
@@ -108,10 +114,9 @@ video {
     text-align: left;
 }
 
-.cell_card {
+.cell_commander {
     position: relative;
-    width: 60%;
-    height: 40%;
+    width: auto;
     padding: 5;
     border: none;
     font-weight: bold;
@@ -121,10 +126,9 @@ video {
     text-align: left;
 }
 
-.cell_points .box {
+.cell_playerlife .cell_playerlife_value {
     position: relative;
-    width: 60%;
-    height: 100%;
+    width: auto;
     padding: 0;
     border: none;
     font-weight: bold;
@@ -133,19 +137,19 @@ video {
     text-align: center;
 }
 
-.box-red {
+.cell_playerlife_value-red {
     color: red !important;
 }
 
-.box-yellow {
+.cell_playerlife_value-yellow {
     color: yellow !important;
 }
 
-.box-white {
+.cell_playerlife_value-white {
     color: white !important;
 }
 
-.box-green {
+.cell_playerlife_value-green {
     color: rgb(3, 197, 39) !important;
 }
 
