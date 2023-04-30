@@ -106,8 +106,7 @@ const toggleReset = (element) => {
   changeInputColor(box, box.value);
 };
 
-const handleDeath = (element) => {
-  const deathButton = element;
+const handleDeath = (deathButton) => {
   const deathScreen = document.createElement('div');
   deathScreen.classList.add('death-screen');
   deathScreen.innerText = 'YOU DIED!';
