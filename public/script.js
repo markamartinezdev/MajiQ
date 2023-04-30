@@ -70,8 +70,8 @@ const addVideoStream = (template, stream) => {
     video.addEventListener("loadedmetadata", () => {
       video.play();
     });
+    videoGrid.append(videoCell);
   }
-  videoGrid.append(videoCell);
 };
 
 
