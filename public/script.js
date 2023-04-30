@@ -6,7 +6,7 @@ let myVideo = null
 var peer = new Peer(undefined, {
   path: "/peerjs",
   host: "/",
-  port: '3030'
+  port: PORT
 });
 let playerName = ''
 let playerId = ''
