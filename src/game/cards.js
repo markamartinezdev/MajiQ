@@ -1,1 +1,1 @@
-const 
+const mtgSdk = rquire('mtgsdk')
