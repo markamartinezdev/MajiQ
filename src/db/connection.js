@@ -7,8 +7,8 @@ var authProvider = new cassandra.auth.PlainTextAuthProvider('scylla', process.en
 async function connect() {
     const cluster = new cassandra.Client({
         contactPoints: [process.env.NODE_SCYLLA_NODE_1, process.env.NODE_SCYLLA_NODE_2, process.env.NODE_SCYLLA_NODE_3],
-        localDataCenter: 'DC1',
-        keyspace: 'majiq',
+        localDataCenter: process.env.NODE_SCYLLA_DATA_CENTER,
+        keyspace: process.env.NODE_SCYLLA_NODE_KEYSPACE,
         authProvider
     })
     return cluster
