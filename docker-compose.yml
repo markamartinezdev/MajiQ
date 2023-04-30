@@ -8,7 +8,7 @@ services:
       - 3030:3030
     restart: 'on-failure:10'
     container_name: majiq
-    
+
   mongo:
     image: mongo
     networks:
@@ -28,7 +28,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: COGGdev
       ME_CONFIG_MONGODB_ADMINPASSWORD: T@coD3v
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://localhost:27017/
 networks:
   nginx_default:
     external: true
