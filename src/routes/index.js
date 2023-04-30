@@ -8,13 +8,14 @@ router.get("/room/:room", (req, res, next) => {
 });
 
 // Create one item
-router.post('/', async (req, res, next) => {
-    try {
-        res.json({ message: 'Create one item' });
-    } catch (err) {
-        next(err);
-    }
-});
+// router.post('/updateGameState', async (req, res, next) => {
+//     try {
+//         const gameState = req.body.gameState
+//         res.json({ message: 'Saved game' });
+//     } catch (err) {
+//         next(err);
+//     }
+// });
 // Get all items
 router.get('/card', async (req, res, next) => {
     try {
