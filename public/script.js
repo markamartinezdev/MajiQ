@@ -6,8 +6,10 @@ let myVideo = null
 var peer = new Peer(undefined, {
   path: "/peerjs",
   host: "/",
-  port: '3030'
+  port: PORT
 });
+let playerName = ''
+let playerId = ''
 let myVideoStream;
 navigator.mediaDevices
   .getUserMedia({
@@ -29,9 +31,9 @@ navigator.mediaDevices
       });
     });
     socket.on("user-connected", (userId) => {
-      let key = sessionStorage.getItem("userId")
-      key = key ?? userId
-      sessionStorage.setItem("userId", key)
+      playerId = sessionStorage.getItem("userId")
+      playerId = playerId ?? userId
+      sessionStorage.setItem("userId", playerId)
       connectToNewUser(userId, stream);
     });
   });
@@ -45,22 +47,25 @@ const connectToNewUser = (userId, stream) => {
 };
 peer.on("open", (id) => {
   // Get saved data from sessionStorage
-  let key = sessionStorage.getItem("userId")
-  key = key ?? id
-  sessionStorage.setItem("userId", key)
-  socket.emit("join-room", ROOM_ID, id, playerName);
+  playerId = sessionStorage.getItem("userId")
+  playerId = playerId ?? id
+  sessionStorage.setItem("userId", playerId)
+  playerName = document.querySelector(`[player-id="${playerId}"]`) ??
+    socket.emit("join-room", ROOM_ID, playerId, playerName);
 });
 
 const addVideoStream = (template, stream) => {
   const video = template.querySelector('video');
   if (!stream) {
     video.style.display = 'none';
+    video.setAttribute('player-id', playerId)
     const blankBox = document.createElement('div');
     blankBox.classList.add('blank-box');
     template.appendChild(blankBox);
   } else {
     video.muted = true;
     video.srcObject = stream;
+    video.setAttribute('player-id', playerId)
     video.addEventListener("loadedmetadata", () => {
       video.play();
     });
