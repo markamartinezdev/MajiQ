@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 // Get all items
-router.get('/', async (_, res, next) => {
+router.get('/all, async (_, res, next) => {
     try {
         res.json({ message: 'Get all item' });
     } catch (err) {
