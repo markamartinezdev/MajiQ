@@ -5,30 +5,10 @@ services:
     networks:
       - nginx_default
     ports:
-      - 3030:3030
+      - "3030:3030"
     restart: 'on-failure:10'
     container_name: majiq
 
-  mongo:
-    image: mongo
-    networks:
-      - nginx_default
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: COGGdev
-      MONGO_INITDB_ROOT_PASSWORD: T@coD3v
-
-  mongo-express:
-    image: mongo-express
-    networks:
-      - nginx_default
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: COGGdev
-      ME_CONFIG_MONGODB_ADMINPASSWORD: T@coD3v
-      ME_CONFIG_MONGODB_URL: mongodb://localhost:27017/
 networks:
   nginx_default:
     external: true
