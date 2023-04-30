@@ -1,69 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MajiQ</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
-    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
-    <script>
-      const ROOM_ID = "<%= roomId %>";
-      const PORT = "<%= port %>";
-    </script>
-  </head>
-  <body>
-    <div class="header">
-      <div class="logo">
-        <img src="https://i.postimg.cc/hj3xpJ3M/majiq.png" alt="MajiQ DICK">
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MajiQ</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+  <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+  <script>
+    const ROOM_ID = "<%= roomId %>";
+    const PORT = "<%= port %>";
+  </script>
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="https://i.postimg.cc/hj3xpJ3M/majiq.png" alt="MajiQ DICK">
     </div>
-    <div class="main">
-      <div class="main__left">
-        <div class="videos__group">
-          <div id="video-grid"></div>
-        </div>
-        <div class="options">
-          <div class="options__left">
-            <div class="options__button">
-              <i class="fa fa-video-camera" aria-hidden="true"></i>
-            </div>
+  </div>
+  <div class="main">
+    <div class="main__left">
+      <div class="videos__group">
+        <div id="video-grid"></div>
+      </div>
+      <div class="options">
+        <div class="options__left">
+          <div class="options__button">
+            <i class="fa fa-video-camera" aria-hidden="true"></i>
+          </div>
           <button class="options__button" onclick="toggleMute(this)">
-              <i class="fa fa-microphone" aria-hidden="true"></i>
+            <i class="fa fa-microphone" aria-hidden="true"></i>
           </button>
-         </div>
-         <div class="options__right">
-           <div class="options__button background__red">
-             <i class="fa fa-phone" aria-hidden="true"></i>
-           </div>
-         </div>
-       </div>
-      </div>
-      <div class="main__right">
-        <div class="main__chat_window">
-          <ul class="messages"></ul>
-       </div>
-       <div class="main__message_container">
-         <input id="chat_message" type="text" placeholder="Type message here...">
-         <div class="options__button">
-           <i class="fa fa-plus" aria-hidden="true"></i>
-         </div>
-       </div>
+        </div>
+        <div class="options__right">
+          <div class="options__button background__red">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+          </div>
+        </div>
       </div>
     </div>
-    <template id="cell-template">
-      <div class="cell">
-        <div class="cell_header">
-          <p class="cell_name" contenteditable="true">Player Name</p>
-          <p class="cell_card" contenteditable="true" oninput="getCards()">Choose your Fighter!</p>
-          <div class="cell_points">
-            <input type="number" class="box" value="40" min="0" max="999">
-          </div>          
-        </div>
-        <video class="cell_video"></video>
+    <div class="main__right">
+      <div class="main__chat_window">
+        <ul class="messages"></ul>
       </div>
-    </template>
-  </body>
-  <script src="script.js"></script>
+      <div class="main__message_container">
+        <input id="chat_message" type="text" placeholder="Type message here...">
+        <div class="options__button">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <template id="cell-template">
+    <div class="cell">
+      <div class="cell_header">
+        <p class="cell_name" contenteditable="true" data-placeholder="Enter player name">Enter player name</p>
+        <div class="cell_points">
+          <input type="number" class="box" value="40" min="0" max="999">
+        </div>
+        <p class="cell_card" contenteditable="true" data-placeholder="Enter commander name">Enter commander name</p>
+      </div>
+      <video class="cell_video"></video>
+    </div>
+  </template>
+</body>
+<script src="script.js"></script>
+
 </html>

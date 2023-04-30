@@ -15,11 +15,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 // Get all items
-<<<<<<< HEAD
-router.get('/all, async (_, res, next) => {
-=======
-router.get('/all', async (_, res, next) => {
->>>>>>> 14b9167b35b887a002696b251d4092e82204c793
+router.get('/idk', async (_, res, next) => {
     try {
         res.json({ message: 'Get all item' });
     } catch (err) {

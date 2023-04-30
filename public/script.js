@@ -89,25 +89,3 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
-
-// Get the cards from the API.
-function getCards() {
-    // Make a request to the API endpoint.
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://api.magicthegathering.io/v1/cards?q=" + document.querySelector(".cell_card").textContent);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        // The request was successful.
-        var cards = JSON.parse(xhr.responseText);
-        // Update the field with the results of the API call.
-        document.querySelector(".cell_card").innerHTML = cards.map(function(card) {
-          return card.name;
-        }).join(", ");
-      } else {
-        // The request failed.
-        console.log("Error getting cards: " + xhr.status);
-      }
-    };
-    xhr.send();
-  }
-  
