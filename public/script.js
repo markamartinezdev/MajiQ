@@ -103,8 +103,14 @@ const toggleVideo = (element) => {
 };
 
 const toggleMute = (element) => {
+  var videoStream = document.querySelector('video');
   element.classList.toggle('active');
-  myVideo.muted = !myVideo.muted;
+  if (element.classList.contains('active')){
+    videoStream.muted = false;
+  }
+  else{
+    videoStream.muted = true;
+  }
 };
 
 const toggleReset = (element) => {
