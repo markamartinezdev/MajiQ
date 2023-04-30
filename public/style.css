@@ -81,7 +81,7 @@ video {
 }
 
 .cell_header {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     top: 0;
@@ -97,12 +97,6 @@ video {
 
 .cell_playername {
     position: relative;
-    float: left;
-}
-
-.cell_playerlife {
-    position: relative;
-    float: right;
     width: 60%;
     height: 40%;
     padding: 5;
@@ -116,7 +110,8 @@ video {
 
 .cell_commander {
     position: relative;
-    width: auto;
+    width: 60%;
+    height: 40%;
     padding: 5;
     border: none;
     font-weight: bold;
@@ -126,9 +121,22 @@ video {
     text-align: left;
 }
 
+.cell_playerlife {
+    width: 10%;
+    height: 40%;
+    padding: 5;
+    border: none;
+    font-weight: bold;
+    color: rgb(107, 2, 213);
+    background-color: transparent;
+    font-size: 22px;
+    text-align: left;
+}
+
 .cell_playerlife .cell_playerlife_value {
     position: relative;
-    width: auto;
+    width: 60%;
+    height: 100%;
     padding: 0;
     border: none;
     font-weight: bold;
