@@ -162,7 +162,7 @@ video {
     color: rgb(3, 197, 39) !important;
 }
 
-.death-screen {
+.cell_deathoverlay {
     display: flex;
     justify-content: center;
     align-items: center;
