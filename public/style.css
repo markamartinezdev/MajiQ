@@ -247,69 +247,31 @@ video {
     height: 360px;
 }
 
-.content {
-    position: relative;
-  }
-  
-  .main__right {
-    position: relative;
-    padding-left: 20px;
-    /* Add some padding to the left to make room for the button */
-    width: auto;
-    /* set initial height */
-    transition: height 0.3s ease;
-    /* add transition for smooth animation */
-  }
-  
-  .collapse-btn {
-    position: absolute;
-    top: 0;
-    left: -20px;
-    /* Position the button to the left of main__right */
-    width: 20px;
-    /* Set the width of the button */
-    height: 20px;
-    /* Set the height of the button */
-    border: none;
-    background-color: #ccc;
+.collapse-button {
+    opacity: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    height: 50px;
+    border-radius: 5px;
+    color: var(--main-light);
+    font-size: 1.2rem;
+    width: 50px;
+    margin: 0 0.5rem;
     cursor: pointer;
-    transform: rotate(-90deg);
-    /* Rotate the button to make it hang from the left edge */
   }
   
-  .collapsed .main__right {
-    width: 0;
-    /* Hide the right content when collapsed */
-    overflow: hidden;
+  .collapse-button:hover {
+    background-color: #ef0c0c;
   }
   
-  .collapsed .collapse-btn {
-    transform: rotate(90deg);
-    /* Rotate the button to make it point to the right when collapsed */
-  }
-  
-  .collapsed .uncollapse-btn {
-    display: block;
-    /* Show the uncollapse button when collapsed */
-  }
-  
-  .uncollapse-btn {
-    position: absolute;
-    top: 0;
-    left: -20px;
-    /* Position the button to the left of main__right */
-    width: 20px;
-    /* Set the width of the button */
-    height: 20px;
-    /* Set the height of the button */
-    border: none;
-    background-color: #ccc;
-    cursor: pointer;
-    transform: rotate(90deg);
-    /* Rotate the button to make it hang from the left edge */
+  .collapse-button.collapsed {
     display: none;
-    /* Hide the button by default */
   }
   
-
+  .collapsed {
+    display: none;
+  }
+  
 /* #endregion */

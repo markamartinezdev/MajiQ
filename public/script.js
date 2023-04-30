@@ -171,19 +171,35 @@ function changeInputColor(input, value) {
 }
 
 // Collapse Chat/Game Log
-const content = document.querySelector('.content');
-const collapseBtn = document.querySelector('.collapse-btn');
-const uncollapseBtn = document.querySelector('.uncollapse-btn');
+function toggleCollapse(element) {
+  const target = element.dataset.target;
+  const isCollapsed = element.classList.contains('collapsed');
 
-collapseBtn.addEventListener('click', () => {
-  content.classList.toggle('collapsed');
-  // Toggle the collapsed class on the content element
-
-  if (content.classList.contains('collapsed')) {
-    collapseBtn.style.display = 'none';
-    uncollapseBtn.style.display = 'block';
+  if (isCollapsed) {
+    element.classList.remove('collapsed');
+    document.getElementById(target).style.display = 'block';
+    button.classList.toggle("active");
   } else {
-    collapseBtn.style.display = 'block';
-    uncollapseBtn.style.display = 'none';
+    element.classList.add('collapsed');
+    document.getElementById(target).style.display = 'none';
+    button.classList.toggle("active");
   }
-});
+}
+
+// Add event listener to collapse button
+document.getElementById('collapse-button').addEventListener('click', toggleCollapse);
+
+//Button Customization
+function toggleCollapse(element, button) {
+  if (element.classList.contains('collapsed')) {
+    element.classList.remove('collapsed');
+    if (button) {
+      button.innerHTML = '<span><i class="fas fa-comment-slash"></i></span>';
+    }
+  } else {
+    element.classList.add('collapsed');
+    if (button) {
+      button.innerHTML = '<span><i class="fas fa-comment"></i></i></span>';
+    }
+  }
+}

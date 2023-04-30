@@ -42,35 +42,23 @@
 					</button>
 				</div>
 				<div class="options__right">
-					<div class="options__button background__red">
-						<i class="fa fa-phone" aria-hidden="true"></i>
+					<div class="collapse-button" data-target="main__right"
+						onclick="toggleCollapse(document.querySelector('.main__right'), this)">
+						<i class="fas fa-comment-slash"></i>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="main__right">
-			<button class="collapse-btn" id="toggleBtn">
-				<i class="fa fa-minus"></i>
-			</button>
-			<button class="uncollapse-btn" id="uncollapseBtn">
-				<i class="fa fa-plus"></i>
-			</button>
-			<div class="content">
-				<div class="collapse-btn"></div>
-				<div class="main__right">
-					<div>
-						<ul class="messages"></ul>
-					</div>
-					<div class="main__message_container">
-						<input id="chat_message" type="text" placeholder="Type message here..." />
-						<div class="options__button">
-							<i class="fa fa-plus" aria-hidden="true"></i>
-						</div>
-					</div>
-					<div>
-						<ul class="messages"></ul>
+			<div class="collapse-content">
+				<ul class="messages"></ul>
+				<div class="main__message_container">
+					<input id="chat_message" type="text" placeholder="Type message here..." />
+					<div class="options__button">
+						<i class="fa fa-plus" aria-hidden="true"></i>
 					</div>
 				</div>
+				<ul class="messages"></ul>
 			</div>
 		</div>
 	</div>
