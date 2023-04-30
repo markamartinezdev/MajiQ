@@ -126,22 +126,6 @@ const toggleDeath = (element) => {
       if (!box) return;
   
       box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
-
-        if (myVideo && !myVideo.paused) {
-          if (box.value <= 0) {
-            box.value = 0;
-            handleDeath();
-          } else if (document.querySelector('.death-screen')) {
-            document.querySelector('.death-screen').remove();
-            if (myVideo.paused) {
-              toggleVideo(videoButton);
-            }
-          } else if (myVideo.paused) {
-            toggleVideo(videoButton);
-          }
-        }
-        
-  
       changeInputColor(box, box.value);
     }
   });
