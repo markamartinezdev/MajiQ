@@ -7,16 +7,17 @@ router.get("/room/:room", (req, res, next) => {
     res.render("room", { roomId: req.params.room, port: Number(process.env.NODE_PROD) ? '' : PORT });
 });
 
-// Create one item
-// router.post('/updateGameState', async (req, res, next) => {
-//     try {
-//         const gameState = req.body.gameState
-//         res.json({ message: 'Saved game' });
-//     } catch (err) {
-//         next(err);
-//     }
-// });
-// Get all items
+// Update game
+router.post('/updateGameState', async (req, res, next) => {
+    try {
+        const gameState = req.body.gameState
+        const playerId = req.body.playerId
+        res.json({ message: 'Saved game' });
+    } catch (err) {
+        next(err);
+    }
+});
+// Search card
 router.get('/card', async (req, res, next) => {
     try {
         const searchTerm = req.query.searchTerm
