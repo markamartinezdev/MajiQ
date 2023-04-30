@@ -105,53 +105,66 @@ const toggleReset = (element) => {
     box.value = Math.min(Number(box.value) + 40, 40);
       changeInputColor(box, box.value);
   };
+
   
+const toggleDeath = (element) => {
+  if (element.classList.contains('active')){
+    document.querySelector('.death-screen').remove();
+    element.classList.remove('active');
+  }
+  else {
+    element.classList.add('active');
+    handleDeath();
+  }
+};
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-    event.preventDefault();
+const handleDeath = () => {
+  const deathButton = document.querySelector('#death-button');
+  const deathScreen = document.createElement('div');
+  deathScreen.classList.add('death-screen');
+  deathScreen.innerText = 'YOU DIED!';
+  deathScreen.style.width = '643.55px';
+  deathScreen.style.height = '362px';
+  deathScreen.style.position = 'absolute';
+  deathScreen.style.top = '0';
+  deathScreen.style.left = '0';
+  deathScreen.style.background = 'rgba(0, 0, 0, 0.7)';
+  deathScreen.style.color = 'red';
+  deathScreen.style.display = 'flex';
+  deathScreen.style.alignItems = 'center';
+  deathScreen.style.justifyContent = 'center';
+  document.querySelector('.cell').appendChild(deathScreen);
+  deathButton.style.display = 'none';
+  toggleVideo(videoButton);
+};
 
-    const box = document.querySelector('.box');
-    if (!box) return;
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      event.preventDefault();
+  
+      const box = document.querySelector('.box');
+      if (!box) return;
+  
+      box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
 
-    box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
-
-    const handleDeath = () => {
-        const deathButton = document.querySelector('#death-button');
-        const deathScreen = document.createElement('div');
-        deathScreen.classList.add('death-screen');
-        deathScreen.innerText = 'YOU DIED!';
-        deathScreen.style.width = '643.55px';
-        deathScreen.style.height = '362px';
-        deathScreen.style.position = 'absolute';
-        deathScreen.style.top = '0';
-        deathScreen.style.left = '0';
-        deathScreen.style.background = 'rgba(0, 0, 0, 0.7)';
-        deathScreen.style.color = 'red';
-        deathScreen.style.display = 'flex';
-        deathScreen.style.alignItems = 'center';
-        deathScreen.style.justifyContent = 'center';
-        document.querySelector('.cell').appendChild(deathScreen);
-        deathButton.style.display = 'none';
-        toggleVideo(videoButton);
-      };
-      
-      if (myVideo && !myVideo.paused) {
-        if (box.value <= 0) {
-          box.value = 0;
-          handleDeath();
-        } else if (document.querySelector('.death-screen')) {
-          document.querySelector('.death-screen').remove();
-          if (myVideo.paused) {
+        if (myVideo && !myVideo.paused) {
+          if (box.value <= 0) {
+            box.value = 0;
+            handleDeath();
+          } else if (document.querySelector('.death-screen')) {
+            document.querySelector('.death-screen').remove();
+            if (myVideo.paused) {
+              toggleVideo(videoButton);
+            }
+          } else if (myVideo.paused) {
             toggleVideo(videoButton);
           }
-        } else if (myVideo.paused) {
-          toggleVideo(videoButton);
         }
-      }
-    changeInputColor(box, box.value);
-  }
-});
+        
+  
+      changeInputColor(box, box.value);
+    }
+  });
 
 function changeInputColor(input, value) {
     input.classList.remove("box-red", "box-yellow", "box-white", "box-green");
