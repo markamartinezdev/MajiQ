@@ -48,7 +48,7 @@ peer.on("open", (id) => {
     let key = sessionStorage.getItem("userId")
     key = key ?? id
     sessionStorage.setItem("userId", key)
-    socket.emit("join-room", ROOM_ID, id);
+    socket.emit("join-room", ROOM_ID, id, playerName);
 });
 
 const addVideoStream = (template, stream) => {
@@ -102,12 +102,8 @@ const toggleReset = (element) => {
     const box = document.querySelector('.box');
     element.classList.add('active');
     
-    if (box.value <= 0) {
-      location.reload();
-    } else {
-      box.value = 40;
+    box.value = Math.min(Number(box.value) + 40, 40);
       changeInputColor(box, box.value);
-    }
   };
 
   

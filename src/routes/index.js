@@ -17,6 +17,18 @@ router.post('/updateGameState', async (req, res, next) => {
         next(err);
     }
 });
+/**
+ * Add player to game
+ */
+router.post('/addPlayer', async () => {
+    try {
+        const player = req.body.player
+        mgt.addPlayer(player)
+        res.json({ message: 'addedPlayer' });
+    } catch (err) {
+        next(err);
+    }
+})
 // Search card
 router.get('/card', async (req, res, next) => {
     try {
