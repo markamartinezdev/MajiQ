@@ -8,19 +8,27 @@ services:
       - 3030:3030
     restart: 'on-failure:10'
     container_name: majiq
-  scylla:
-    command: '--developer-mode=0'
-    image: scylladb/scylla
+    
+  mongo:
+    image: mongo
     networks:
       - nginx_default
-    volumes:
-      - /var/lib/scylla:/var/lib/scylla
-    container_name: scylla
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: COGGdev
+      MONGO_INITDB_ROOT_PASSWORD: T@coD3v
+
+  mongo-express:
+    image: mongo-express
+    networks:
+      - nginx_default
+    restart: always
     ports:
-      - 7000-7001:7000-7001
-      - 9042:9042
-      - 9160:9160
-      - 10000:10000
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: COGGdev
+      ME_CONFIG_MONGODB_ADMINPASSWORD: T@coD3v
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 networks:
   nginx_default:
     external: true
