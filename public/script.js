@@ -200,12 +200,12 @@ function toggleCollapse(element, button) {
   if (element.classList.contains('collapsed')) {
     element.classList.remove('collapsed');
     if (button) {
-      button.innerHTML = '<span><i class="fas fa-comment-slash"></i></span>';
+      button.innerHTML = '<span><i class="fas fa-comment"></i></span>';
     }
   } else {
     element.classList.add('collapsed');
     if (button) {
-      button.innerHTML = '<span><i class="fas fa-comment"></i></i></span>';
+      button.innerHTML = '<span><i class="fas fa-comment-slash"></i></i></span>';
     }
   }
 }
