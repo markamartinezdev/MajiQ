@@ -56,7 +56,7 @@
 }
 
 video {
-    height: 50%;
+    height: 25vh;
     border-radius: 1rem;
     object-fit: cover;
     transform: rotateY(180deg);
