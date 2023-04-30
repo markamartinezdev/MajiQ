@@ -85,14 +85,14 @@ const toggleVideo = (element) => {
   if (element.classList.contains('active')) {
     element.classList.remove('active');
     myVideo?.pause();
-    video.style.display = 'none';
+    video.style.visibility = 'hidden';
     if (placeholder) {
       placeholder.style.display = 'block';
     }
   } else {
     element.classList.add('active');
     myVideo?.play();
-    video.style.display = 'block';
+    video.style.visibility = 'visible';
     if (placeholder) {
       placeholder.style.display = 'none';
     }
