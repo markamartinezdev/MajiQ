@@ -109,6 +109,24 @@ const toggleReset = (element) => {
       changeInputColor(box, box.value);
     }
   };
+
+  const toggleDeath = (element) => {
+    if (element.classList.contains('active')){
+      document.querySelector('.death-screen').remove();
+      if (myVideo.paused) {
+        toggleVideo(videoButton);
+      }
+    }
+    else {
+      toggleVideo(videoButton);
+      const deathScreen = document.createElement('div');
+      deathScreen.classList.add('death-screen');
+      deathScreen.innerText = 'YOU DIED!';
+      deathScreen.style.width = `640px`;
+      deathScreen.style.height = `480px`;
+      document.querySelector('.cell').appendChild(deathScreen);
+    }
+  }
   
 
 document.addEventListener('keydown', (event) => {
