@@ -107,12 +107,13 @@ const toggleVideo = (element) => {
 const toggleMute = (element) => {
   var videoStream = document.querySelector('video');
   element.classList.toggle('active');
-  if (element.classList.contains('active')){
+  if (element.classList.contains('active')) {
     videoStream.muted = false;
   }
-  else{
+  else {
     videoStream.muted = true;
   }
+  video.muted = !video.muted;
 };
 
 const toggleReset = (element) => {
@@ -154,15 +155,15 @@ const toggleDeath = (element) => {
 };
 
 document.addEventListener('keydown', (event) => {
-  if (["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)) {
+  if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
     event.preventDefault();
-    if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)){
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
       debugger
     }
     const box = document.querySelector('.cell_playerlife_value');
     if (!box) return;
-    
-    box.value = parseInt(box.value) + (["ArrowUp","ArrowRight"].includes(event.key) ? 1 : -1);
+
+    box.value = parseInt(box.value) + (["ArrowUp", "ArrowRight"].includes(event.key) ? 1 : -1);
     changeInputColor(box, box.value);
   }
 });
@@ -171,18 +172,18 @@ function reduceLife(element) {
   const box = element.parentNode.querySelector('.cell_playerlife_value');
   if (!box) return;
 
-  box.value = parseInt(box.value)-1;
+  box.value = parseInt(box.value) - 1;
   changeInputColor(box, box.value);
-  playerLife-=1
+  playerLife -= 1
 }
 
 function addLife(element) {
   const box = element.parentNode.querySelector('.cell_playerlife_value');
   if (!box) return;
 
-  box.value = parseInt(box.value)+1;
+  box.value = parseInt(box.value) + 1;
   changeInputColor(box, box.value);
-  playerLife+=1
+  playerLife += 1
 }
 
 
