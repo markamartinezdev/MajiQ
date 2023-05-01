@@ -8,8 +8,10 @@ var peer = new Peer(undefined, {
   host: "/",
   port: PORT
 });
+const playerIds = []
 let playerName = ''
 let playerId = ''
+let playerLife = 40
 let myVideoStream;
 navigator.mediaDevices
   .getUserMedia({
@@ -31,9 +33,6 @@ navigator.mediaDevices
       });
     });
     socket.on("user-connected", (userId) => {
-      playerId = sessionStorage.getItem("userId")
-      playerId = playerId ?? userId
-      sessionStorage.setItem("userId", playerId)
       connectToNewUser(userId, stream);
     });
   });
@@ -41,37 +40,43 @@ const connectToNewUser = (userId, stream) => {
   const call = peer.call(userId, stream);
   template = Template.innerHTML
   call.on("stream", (userVideoStream) => {
-    addVideoStream(template, userVideoStream);
+    if (!playerIds.includes(userId)) {
+      playerIds.push(userId)
+      addVideoStream(template, userVideoStream);
+    }
   });
 };
 peer.on("open", (id) => {
   // Get saved data from sessionStorage
-  playerId = sessionStorage.getItem("userId")
-  playerId = playerId ?? id
-  sessionStorage.setItem("userId", playerId)
-  playerName = document.querySelector(`[player-id="${playerId}"]`) ??
-    socket.emit("join-room", ROOM_ID, id, playerName);
+  socket.emit("join-room", ROOM_ID, id);
 });
 
 const addVideoStream = (template, stream) => {
   const videoCell = document.createElement('div')
   videoCell.innerHTML = template
   const video = videoCell.querySelector('video');
-  if (!stream) {
-    video.style.display = 'none';
-    video.setAttribute('player-id', playerId)
-    const blankBox = document.createElement('div');
-    blankBox.classList.add('blank-box');
-    template.appendChild(blankBox);
-  } else {
-    video.muted = true;
-    video.srcObject = stream;
-    video.setAttribute('player-id', playerId)
-    video.addEventListener("loadedmetadata", () => {
-      video.play();
-    });
+  video.srcObject = stream;
+  video.muted = true;
+  // video.setAttribute('player-id', playerId)
+  video.addEventListener("loadedmetadata", () => {
+    video.play();
     videoGrid.append(videoCell);
-  }
+  });
+  // if (!stream) {
+  //   video.style.display = 'none';
+  //   // video.setAttribute('player-id', playerId)
+  //   const blankBox = document.createElement('div');
+  //   blankBox.classList.add('blank-box');
+  //   template.appendChild(blankBox);
+  // } else {
+  //   video.muted = true;
+  //   video.srcObject = stream;
+  //   // video.setAttribute('player-id', playerId)
+  //   video.addEventListener("loadedmetadata", () => {
+  //     video.play();
+  //     videoGrid.append(videoCell);
+  //   });
+  // }
 };
 
 
@@ -100,8 +105,15 @@ const toggleVideo = (element) => {
 };
 
 const toggleMute = (element) => {
+  var videoStream = document.querySelector('video');
   element.classList.toggle('active');
-  myVideo.muted = !myVideo.muted;
+  if (element.classList.contains('active')) {
+    videoStream.muted = false;
+  }
+  else {
+    videoStream.muted = true;
+  }
+  video.muted = !video.muted;
 };
 
 const toggleReset = (element) => {
@@ -124,16 +136,37 @@ const toggleDeath = (element) => {
 };
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+  if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
     event.preventDefault();
-
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+      debugger
+    }
     const box = document.querySelector('.cell_playerlife_value');
     if (!box) return;
 
-    box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
+    box.value = parseInt(box.value) + (["ArrowUp", "ArrowRight"].includes(event.key) ? 1 : -1);
     changeInputColor(box, box.value);
   }
 });
+
+function reduceLife(element) {
+  const box = element.parentNode.querySelector('.cell_playerlife_value');
+  if (!box) return;
+
+  box.value = parseInt(box.value) - 1;
+  changeInputColor(box, box.value);
+  playerLife -= 1
+}
+
+function addLife(element) {
+  const box = element.parentNode.querySelector('.cell_playerlife_value');
+  if (!box) return;
+
+  box.value = parseInt(box.value) + 1;
+  changeInputColor(box, box.value);
+  playerLife += 1
+}
+
 
 function changeInputColor(input, value) {
   input.classList.remove("cell_playerlife_value-red", "cell_playerlife_value-yellow", "cell_playerlife_value-white", "cell_playerlife_value-green");
@@ -148,3 +181,89 @@ function changeInputColor(input, value) {
   }
 }
 
+// Collapse Chat/Game Log
+function toggleCollapse(element) {
+  const target = element.dataset.target;
+  const isCollapsed = element.classList.contains('collapsed');
+
+  if (isCollapsed) {
+    element.classList.remove('collapsed');
+    document.getElementById(target).style.display = 'block';
+    button.classList.toggle("active");
+  } else {
+    element.classList.add('collapsed');
+    document.getElementById(target).style.display = 'none';
+    button.classList.toggle("active");
+  }
+}
+
+// Add event listener to collapse button
+document.getElementById('collapse-button').addEventListener('click', toggleCollapse);
+
+//Button Customization
+function toggleCollapse(element, button) {
+  if (element.classList.contains('collapsed')) {
+    element.classList.remove('collapsed');
+    if (button) {
+      button.innerHTML = '<span><i class="fas fa-comment"></i></span>';
+    }
+  } else {
+    element.classList.add('collapsed');
+    if (button) {
+      button.innerHTML = '<span><i class="fas fa-comment-slash"></i></i></span>';
+    }
+  }
+}
+
+//Card Search
+function search(button) {
+  // Get the search term from the text field
+  var searchTerm = document.getElementById("searchTerm").value;
+
+  // Make a request to the search endpoint
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "https://mtg.pingadulce.com/card?searchTerm=" + searchTerm);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      // The request was successful, so parse the results
+      var results = JSON.parse(xhr.responseText);
+
+      // Display the results
+      for (var i = 0; i < results.length; i++) {
+        var result = results[i];
+        var title = result.title;
+        var image = result.image;
+
+        // Create a paragraph element to display the title
+        var paragraph = document.createElement("p");
+        paragraph.textContent = title;
+
+        // Create an image element to display the image
+        var imageElement = document.createElement("img");
+        imageElement.src = image;
+
+        // Append the paragraph and image element to the results div
+        $("#results").append(paragraph);
+        $("#results").append(imageElement);
+      }
+    } else {
+      // The request failed, so display an error message
+      alert("Error: " + xhr.status);
+    }
+  };
+  xhr.send();
+}
+
+function closePopup() {
+  // Hide the popup
+  $("#searchPopup").hide();
+}
+
+// When the user clicks on a result, add it to the messages ul
+$("#results").on("click", ".result", function () {
+  var title = $(this).text();
+  var li = document.createElement("li");
+  li.textContent = title;
+  $(".messages").append(li);
+  closePopup();
+});

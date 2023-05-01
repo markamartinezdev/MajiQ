@@ -1,6 +1,5 @@
 require("dotenv").config()
 const express = require("express");
-const mgt = require('./src/game/cards.js')
 const app = express();
 const server = require("http").Server(app);
 const routes = require('./src/routes/index.js')
@@ -19,13 +18,12 @@ app.get("/", (req, res) => {
   res.redirect(`/room/${uuidv4()}`);
 });
 io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId, userName) => {
+  socket.on("join-room", (roomId, userId) => {
     socket.join(roomId);
-    mgt.addPlayer(userId, userName)
     const broadcast = socket.to(roomId)
     broadcast.emit("user-connected", userId);
   });
-});;
+});
 server.listen(PORT, () => {
   console.log('connected on port: ' + PORT)
 });
