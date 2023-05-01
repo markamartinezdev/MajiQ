@@ -233,3 +233,56 @@ function toggleCollapse(element, button) {
     }
   }
 }
+
+//Card Search
+function search() {
+  // Get the search term from the text field
+  var searchTerm = document.getElementById("searchTerm").value;
+
+  // Make a request to the search endpoint
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "https://mtg.pingadulce.com/card?searchTerm=" + searchTerm);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // The request was successful, so parse the results
+      var results = JSON.parse(xhr.responseText);
+
+      // Display the results
+      for (var i = 0; i < results.length; i++) {
+        var result = results[i];
+        var title = result.title;
+        var image = result.image;
+
+        // Create a paragraph element to display the title
+        var paragraph = document.createElement("p");
+        paragraph.textContent = title;
+
+        // Create an image element to display the image
+        var imageElement = document.createElement("img");
+        imageElement.src = image;
+
+        // Append the paragraph and image element to the results div
+        $("#results").append(paragraph);
+        $("#results").append(imageElement);
+      }
+    } else {
+      // The request failed, so display an error message
+      alert("Error: " + xhr.status);
+    }
+  };
+  xhr.send();
+}
+
+function closePopup() {
+  // Hide the popup
+  $("#searchPopup").hide();
+}
+
+// When the user clicks on a result, add it to the messages ul
+$("#results").on("click", ".result", function() {
+  var title = $(this).text();
+  var li = document.createElement("li");
+  li.textContent = title;
+  $(".messages").append(li);
+  closePopup();
+});
