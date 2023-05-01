@@ -107,12 +107,13 @@ const toggleVideo = (element) => {
 const toggleMute = (element) => {
   var videoStream = document.querySelector('video');
   element.classList.toggle('active');
-  if (element.classList.contains('active')){
+  if (element.classList.contains('active')) {
     videoStream.muted = false;
   }
-  else{
+  else {
     videoStream.muted = true;
   }
+  video.muted = !video.muted;
 };
 
 const toggleReset = (element) => {
@@ -138,15 +139,15 @@ const toggleDeath = () => {
 };
 
 document.addEventListener('keydown', (event) => {
-  if (["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)) {
+  if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
     event.preventDefault();
-    if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)){
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
       debugger
     }
     const box = document.querySelector('.cell_playerlife_value');
     if (!box) return;
-    
-    box.value = parseInt(box.value) + (["ArrowUp","ArrowRight"].includes(event.key) ? 1 : -1);
+
+    box.value = parseInt(box.value) + (["ArrowUp", "ArrowRight"].includes(event.key) ? 1 : -1);
     changeInputColor(box, box.value);
   }
 });
@@ -155,18 +156,18 @@ function reduceLife(element) {
   const box = element.parentNode.querySelector('.cell_playerlife_value');
   if (!box) return;
 
-  box.value = parseInt(box.value)-1;
+  box.value = parseInt(box.value) - 1;
   changeInputColor(box, box.value);
-  playerLife-=1
+  playerLife -= 1
 }
 
 function addLife(element) {
   const box = element.parentNode.querySelector('.cell_playerlife_value');
   if (!box) return;
 
-  box.value = parseInt(box.value)+1;
+  box.value = parseInt(box.value) + 1;
   changeInputColor(box, box.value);
-  playerLife+=1
+  playerLife += 1
 }
 
 
@@ -216,3 +217,56 @@ function toggleCollapse(element, button) {
     }
   }
 }
+
+//Card Search
+function search(button) {
+  // Get the search term from the text field
+  var searchTerm = document.getElementById("searchTerm").value;
+
+  // Make a request to the search endpoint
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "https://mtg.pingadulce.com/card?searchTerm=" + searchTerm);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      // The request was successful, so parse the results
+      var results = JSON.parse(xhr.responseText);
+
+      // Display the results
+      for (var i = 0; i < results.length; i++) {
+        var result = results[i];
+        var title = result.title;
+        var image = result.image;
+
+        // Create a paragraph element to display the title
+        var paragraph = document.createElement("p");
+        paragraph.textContent = title;
+
+        // Create an image element to display the image
+        var imageElement = document.createElement("img");
+        imageElement.src = image;
+
+        // Append the paragraph and image element to the results div
+        $("#results").append(paragraph);
+        $("#results").append(imageElement);
+      }
+    } else {
+      // The request failed, so display an error message
+      alert("Error: " + xhr.status);
+    }
+  };
+  xhr.send();
+}
+
+function closePopup() {
+  // Hide the popup
+  $("#searchPopup").hide();
+}
+
+// When the user clicks on a result, add it to the messages ul
+$("#results").on("click", ".result", function () {
+  var title = $(this).text();
+  var li = document.createElement("li");
+  li.textContent = title;
+  $(".messages").append(li);
+  closePopup();
+});

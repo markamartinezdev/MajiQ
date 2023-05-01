@@ -52,11 +52,11 @@
 		<div class="main__right">
 			<div class="collapse-content">
 				<ul class="messages"></ul>
-				<div class="main__message_container">
-					<input id="chat_message" type="text" placeholder="Type message here..." />
-					<div class="options__button">
-						<i class="fa fa-plus" aria-hidden="true"></i>
-					</div>
+				<div id="searchPopup">
+					<input type="text" id="searchTerm">
+					<button onclick="search(this)">Search</button>
+					<button onclick="closePopup(this)">Close</button>
+					<div id="results"></div>
 				</div>
 				<ul class="messages"></ul>
 			</div>
@@ -67,7 +67,12 @@
 			<div class="cell_header">
 				<div class="cell_header_left">
 					<div class="cell_playername" contenteditable="true">Enter player name</div>
-					<div class="cell_commander" contenteditable="true">Enter commander name</div>
+					<div id="searchPopup">
+						<input type="text" id="searchTerm">
+						<button onclick="search()">Search</button>
+						<button onclick="closePopup()">Close</button>
+						<div id="results"></div>
+					</div>
 				</div>
 				<div class="cell_header_right">
 					<div class="cell_playerlife">
