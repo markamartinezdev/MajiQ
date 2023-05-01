@@ -112,33 +112,17 @@ const toggleReset = (element) => {
   changeInputColor(box, box.value);
 };
 
-const handleDeath = (deathButton) => {
-  const deathScreen = document.createElement('div');
-  deathScreen.classList.add('death-screen');
-  deathScreen.innerText = 'YOU DIED!';
-  deathScreen.style.width = '643.55px';
-  deathScreen.style.height = '362px';
-  deathScreen.style.position = 'absolute';
-  deathScreen.style.top = '0';
-  deathScreen.style.left = '0';
-  deathScreen.style.background = 'rgba(0, 0, 0, 0.7)';
-  deathScreen.style.color = 'red';
-  deathScreen.style.display = 'flex';
-  deathScreen.style.alignItems = 'center';
-  deathScreen.style.justifyContent = 'center';
-  document.querySelector('.cell').appendChild(deathScreen);
-};
-
 const toggleDeath = (element) => {
   if (element.classList.contains('active')) {
-    document.querySelector('.death-screen').remove();
+    document.querySelector('.cell_deathoverlay').display = 'hidden'
     element.classList.remove('active');
   }
   else {
     element.classList.add('active');
-    handleDeath(element);
+    document.querySelector('.cell_deathoverlay').display = 'show'
   }
 };
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
     event.preventDefault();
@@ -146,13 +130,7 @@ document.addEventListener('keydown', (event) => {
     const box = document.querySelector('.cell_playerlife_value');
     if (!box) return;
 
-    if (event.ctrlKey) {
-      box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 10 : -10);
-    }
-    else {
-      box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
-    }
-
+    box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
     changeInputColor(box, box.value);
   }
 });
