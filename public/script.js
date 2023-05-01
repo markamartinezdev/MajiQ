@@ -235,14 +235,14 @@ function toggleCollapse(element, button) {
 }
 
 //Card Search
-function search() {
+function search(button) {
   // Get the search term from the text field
   var searchTerm = document.getElementById("searchTerm").value;
 
   // Make a request to the search endpoint
   var xhr = new XMLHttpRequest();
   xhr.open("GET", "https://mtg.pingadulce.com/card?searchTerm=" + searchTerm);
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (xhr.status === 200) {
       // The request was successful, so parse the results
       var results = JSON.parse(xhr.responseText);
@@ -279,7 +279,7 @@ function closePopup() {
 }
 
 // When the user clicks on a result, add it to the messages ul
-$("#results").on("click", ".result", function() {
+$("#results").on("click", ".result", function () {
   var title = $(this).text();
   var li = document.createElement("li");
   li.textContent = title;
