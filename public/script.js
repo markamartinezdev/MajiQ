@@ -11,6 +11,7 @@ var peer = new Peer(undefined, {
 const playerIds = []
 let playerName = ''
 let playerId = ''
+let playerLife = 40
 let myVideoStream;
 navigator.mediaDevices
   .getUserMedia({
@@ -55,6 +56,7 @@ const addVideoStream = (template, stream) => {
   videoCell.innerHTML = template
   const video = videoCell.querySelector('video');
   video.srcObject = stream;
+  video.muted = true;
   // video.setAttribute('player-id', playerId)
   video.addEventListener("loadedmetadata", () => {
     video.play();
@@ -103,8 +105,14 @@ const toggleVideo = (element) => {
 };
 
 const toggleMute = (element) => {
+  var videoStream = document.querySelector('video');
   element.classList.toggle('active');
-  myVideo.muted = !myVideo.muted;
+  if (element.classList.contains('active')){
+    videoStream.muted = false;
+  }
+  else{
+    videoStream.muted = true;
+  }
 };
 
 const toggleReset = (element) => {
@@ -146,16 +154,37 @@ const toggleDeath = (element) => {
 };
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+  if (["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)) {
     event.preventDefault();
-
+    if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)){
+      debugger
+    }
     const box = document.querySelector('.cell_playerlife_value');
     if (!box) return;
-
-    box.value = parseInt(box.value) + (event.key === 'ArrowUp' ? 1 : -1);
+    
+    box.value = parseInt(box.value) + (["ArrowUp","ArrowRight"].includes(event.key) ? 1 : -1);
     changeInputColor(box, box.value);
   }
 });
+
+function reduceLife(element) {
+  const box = element.parentNode.querySelector('.cell_playerlife_value');
+  if (!box) return;
+
+  box.value = parseInt(box.value)-1;
+  changeInputColor(box, box.value);
+  playerLife-=1
+}
+
+function addLife(element) {
+  const box = element.parentNode.querySelector('.cell_playerlife_value');
+  if (!box) return;
+
+  box.value = parseInt(box.value)+1;
+  changeInputColor(box, box.value);
+  playerLife+=1
+}
+
 
 function changeInputColor(input, value) {
   input.classList.remove("cell_playerlife_value-red", "cell_playerlife_value-yellow", "cell_playerlife_value-white", "cell_playerlife_value-green");
@@ -194,12 +223,12 @@ function toggleCollapse(element, button) {
   if (element.classList.contains('collapsed')) {
     element.classList.remove('collapsed');
     if (button) {
-      button.innerHTML = '<span><i class="fas fa-comment-slash"></i></span>';
+      button.innerHTML = '<span><i class="fas fa-comment"></i></span>';
     }
   } else {
     element.classList.add('collapsed');
     if (button) {
-      button.innerHTML = '<span><i class="fas fa-comment"></i></i></span>';
+      button.innerHTML = '<span><i class="fas fa-comment-slash"></i></i></span>';
     }
   }
 }

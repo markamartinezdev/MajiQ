@@ -17,6 +17,12 @@
     padding: 0;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* #region Web Header */
 .header {
     display: flex;
@@ -84,10 +90,14 @@ video {
     width: 100%;
 }
 
+.cell_header_left {
+    flex:1;
+}
+
 .cell_header {
     position: absolute;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     top: 0;
     left: 0;
     width: 100%;
@@ -101,8 +111,7 @@ video {
 
 .cell_playername {
     position: relative;
-    width: 60%;
-    height: 40%;
+    display: block;
     padding: 5px;
     border: none;
     font-weight: bold;
@@ -114,8 +123,7 @@ video {
 
 .cell_commander {
     position: relative;
-    width: 60%;
-    height: 40%;
+    display: block;
     padding: 5px;
     border: none;
     font-weight: bold;
@@ -126,21 +134,20 @@ video {
 }
 
 .cell_playerlife {
-    width: 30%;
-    height: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 5px;
     border: none;
     font-weight: bold;
     color: rgb(107, 2, 213);
     background-color: transparent;
     font-size: 22px;
-    text-align: left;
+    text-align: right;
 }
 
 .cell_playerlife .cell_playerlife_value {
     position: relative;
-    width: 60%;
-    height: 100%;
     padding: 0;
     border: none;
     font-weight: bold;
@@ -164,6 +171,22 @@ video {
 
 .cell_playerlife_value-green {
     color: rgb(3, 197, 39) !important;
+}
+
+.cell_playerlife_button {
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: salmon;
+    border: none;
+}
+
+.cell_loss {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    color: #fff;
 }
 
 .cell_deathoverlay {
