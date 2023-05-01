@@ -55,28 +55,21 @@ const addVideoStream = (template, stream) => {
   const videoCell = document.createElement('div')
   videoCell.innerHTML = template
   const video = videoCell.querySelector('video');
-  video.srcObject = stream;
-  video.muted = true;
-  // video.setAttribute('player-id', playerId)
-  video.addEventListener("loadedmetadata", () => {
-    video.play();
-    videoGrid.append(videoCell);
-  });
-  // if (!stream) {
-  //   video.style.display = 'none';
-  //   // video.setAttribute('player-id', playerId)
-  //   const blankBox = document.createElement('div');
-  //   blankBox.classList.add('blank-box');
-  //   template.appendChild(blankBox);
-  // } else {
-  //   video.muted = true;
-  //   video.srcObject = stream;
-  //   // video.setAttribute('player-id', playerId)
-  //   video.addEventListener("loadedmetadata", () => {
-  //     video.play();
-  //     videoGrid.append(videoCell);
-  //   });
-  // }
+  if (!stream) {
+    // video.style.display = 'none';
+    // video.setAttribute('player-id', playerId)
+    const blankBox = document.createElement('div');
+    blankBox.classList.add('blank-box');
+    template.appendChild(blankBox);
+  } else {
+    video.muted = true;
+    video.srcObject = stream;
+    // video.setAttribute('player-id', playerId)
+    video.addEventListener("loadedmetadata", () => {
+      video.play();
+      videoGrid.append(videoCell);
+    });
+  }
 };
 
 
