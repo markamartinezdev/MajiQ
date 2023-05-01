@@ -124,32 +124,16 @@ const toggleReset = (element) => {
 };
 
 const handleDeath = (deathButton) => {
-  const deathScreen = document.createElement('div');
-  deathScreen.classList.add('death-screen');
-  deathScreen.innerText = 'YOU DIED!';
-  deathScreen.style.width = '643.55px';
-  deathScreen.style.height = '362px';
-  deathScreen.style.position = 'absolute';
-  deathScreen.style.top = '0';
-  deathScreen.style.left = '0';
-  deathScreen.style.background = 'rgba(0, 0, 0, 0.7)';
-  deathScreen.style.color = 'red';
-  deathScreen.style.display = 'flex';
-  deathScreen.style.alignItems = 'center';
-  deathScreen.style.justifyContent = 'center';
-  document.querySelector('.cell').appendChild(deathScreen);
-  deathButton.style.display = 'none';
   toggleVideo(videoButton);
 };
 
-const toggleDeath = (element) => {
-  if (element.classList.contains('active')) {
-    document.querySelector('.death-screen').remove();
-    element.classList.remove('active');
+const toggleDeath = () => {
+  var toggleBox = document.getElementById('cell_deathtoggle');
+  if (toggleBox.checked) {
+    document.getElementById('cell_deathoverlay').style.display = "inline-block";
   }
   else {
-    element.classList.add('active');
-    handleDeath(element);
+    document.getElementById('cell_deathoverlay').style.display = "none";
   }
 };
 

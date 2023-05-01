@@ -79,10 +79,14 @@
 							<i class="fa-solid fa-plus"></i>
 						</button>
 					</div>
-					<div class="cell_loss">
-						<input type="checkbox" class="cell_toggleloss" value="eliminated" checked>Eliminated</div>
+					<div class="cell_toggledeath">
+						<input type="checkbox" id="cell_deathtoggle" value="eliminated"
+							onclick="toggleDeath()">Eliminated
 					</div>
 				</div>
+			</div>
+			<div id="cell_deathoverlay">
+				<div id="overlaytext"> You've been Eliminated. </div>
 			</div>
 			<video player-id="" class="cell_video"></video>
 		</div>
