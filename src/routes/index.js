@@ -1,10 +1,12 @@
+require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 const mgt = require('../game/cards.js')
 
 const PORT = process.env.NODE_PORT ?? 3030
 router.get("/room/:room", (req, res, next) => {
-    res.render("room", { roomId: req.params.room, port: Number(process.env.NODE_PROD) ? '' : PORT });
+    console.log(Number(process.env.NODE_DEV), Number(process.env.NODE_DEV) ? PORT : '')
+    res.render("room", { roomId: req.params.room, port: Number(process.env.NODE_DEV) ? PORT : '' });
 });
 
 // Update game
