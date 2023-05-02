@@ -8,8 +8,6 @@ services:
       - "3030:3030"
     restart: 'on-failure:10'
     container_name: majiq
-    volumes:
-      - '.env:/usr/src/app/.env'
 
 networks:
   nginx_default:
