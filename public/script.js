@@ -131,14 +131,13 @@ const handleDeath = (deathButton) => {
   toggleVideo(videoButton);
 };
 
-const toggleDeath = (element) => {
-  if (element.classList.contains('active')) {
-    document.querySelector('.death-screen').remove();
-    element.classList.remove('active');
+function toggleDeath() {
+  if(document.getElementById('togglebox').checked)
+  {
+    document.getElementById('cell_deathoverlay').style.display = "inline-block";
   }
-  else {
-    element.classList.add('active');
-    handleDeath(element);
+  else{
+    document.getElementById('cell_deathoverlay').style.display = "none";
   }
 };
 
