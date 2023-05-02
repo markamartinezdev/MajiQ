@@ -30,7 +30,6 @@ navigator.mediaDevices
       call.answer(stream);
       const video = document.createElement("video");
       call.on("stream", (userVideoStream) => {
-        debugger
         addVideoStream(video, userVideoStream, playerId);
       });
     });
@@ -40,13 +39,10 @@ navigator.mediaDevices
   });
 const connectToNewUser = (userId, stream, streamPlayerId) => {
   const call = peer.call(userId, stream);
-  const video = document.createElement("video");
-  setTimeout(() => {
-
-    call.on("stream", (userVideoStream) => {
-      addVideoStream(video, userVideoStream, streamPlayerId);
-    });
-  }, 1000)
+  call.on("stream", (userVideoStream) => {
+    const video = document.createElement("video");
+    addVideoStream(video, userVideoStream, streamPlayerId);
+  });
 };
 
 peer.on("open", (id) => {
