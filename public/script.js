@@ -1,6 +1,7 @@
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement("video");
+const r = document.querySelector(':root')
 myVideo.muted = true;
 var peer = new Peer(undefined, {
   path: "/peerjs",
@@ -31,7 +32,7 @@ navigator.mediaDevices
       const video = document.createElement("video");
       call.on("stream", (userVideoStream) => {
         debugger
-        addVideoStream(video, userVideoStream,  Date.now());
+        addVideoStream(video, userVideoStream, Date.now());
       });
     });
     socket.on("user-connected", ({ userId, playerId: streamPlayerId }) => {
@@ -53,6 +54,8 @@ peer.on("open", (id) => {
 const addVideoStream = (video, stream, streamPlayerId) => {
   const streamId = stream.id
   if (!streamIds.includes(streamId) && !playerIds.includes(streamPlayerId)) {
+    const columnsCount = playerIds.length > 4 ? 3 : 2
+    r.style.setProperty('--columns', columnsCount)
     let template = document.getElementById('cell-template')
     streamIds.push(streamId)
     playerIds.push(streamPlayerId)

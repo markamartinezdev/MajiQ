@@ -81,13 +81,14 @@ video {
 
 #video-grid {
     display: flex;
+    gap: 1rem;
     justify-content: center;
-    grid-template-columns: 1fr 1fr;
+    flex-wrap: wrap;
 }
 
 .cell {
     position: relative;
-    width: 100%;
+    width: calc(calc(100% / var(--columns)) - 0.5rem);
 }
 
 .cell_header_left {
