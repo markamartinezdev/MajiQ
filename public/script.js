@@ -112,25 +112,6 @@ const toggleReset = (element) => {
   changeInputColor(box, box.value);
 };
 
-const handleDeath = (deathButton) => {
-  const deathScreen = document.createElement('div');
-  deathScreen.classList.add('death-screen');
-  deathScreen.innerText = 'YOU DIED!';
-  deathScreen.style.width = '643.55px';
-  deathScreen.style.height = '362px';
-  deathScreen.style.position = 'absolute';
-  deathScreen.style.top = '0';
-  deathScreen.style.left = '0';
-  deathScreen.style.background = 'rgba(0, 0, 0, 0.7)';
-  deathScreen.style.color = 'red';
-  deathScreen.style.display = 'flex';
-  deathScreen.style.alignItems = 'center';
-  deathScreen.style.justifyContent = 'center';
-  document.querySelector('.cell').appendChild(deathScreen);
-  deathButton.style.display = 'none';
-  toggleVideo(videoButton);
-};
-
 function toggleDeath() {
   if(document.getElementById('togglebox').checked)
   {
