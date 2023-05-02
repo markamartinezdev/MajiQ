@@ -41,9 +41,12 @@ navigator.mediaDevices
 const connectToNewUser = (userId, stream, streamPlayerId) => {
   const call = peer.call(userId, stream);
   const video = document.createElement("video");
-  call.on("stream", (userVideoStream) => {
-    addVideoStream(video, userVideoStream, streamPlayerId);
-  });
+  setTimeout(() => {
+
+    call.on("stream", (userVideoStream) => {
+      addVideoStream(video, userVideoStream, streamPlayerId);
+    });
+  }, 1000)
 };
 
 peer.on("open", (id) => {
