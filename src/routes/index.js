@@ -1,7 +1,7 @@
+require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 const mgt = require('../game/cards.js')
-require('dotenv').config()
 
 const PORT = process.env.NODE_PORT ?? 3030
 router.get("/room/:room", (req, res, next) => {
