@@ -38,8 +38,8 @@ navigator.mediaDevices
     });
   });
 const connectToNewUser = (userId, stream, streamPlayerId) => {
-  const call = peer.call(userId, stream);
-  call.on("stream", (userVideoStream) => {
+  const newCall = peer.call(userId, stream);
+  newCall.on("stream", (userVideoStream) => {
     const video = document.createElement("video");
     addVideoStream(video, userVideoStream, streamPlayerId);
   });
