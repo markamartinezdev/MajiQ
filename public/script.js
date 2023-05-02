@@ -30,7 +30,8 @@ navigator.mediaDevices
       call.answer(stream);
       const video = document.createElement("video");
       call.on("stream", (userVideoStream) => {
-        addVideoStream(video, userVideoStream, playerId);
+        debugger
+        addVideoStream(video, userVideoStream,  Date.now());
       });
     });
     socket.on("user-connected", ({ userId, playerId: streamPlayerId }) => {
@@ -54,9 +55,13 @@ const addVideoStream = (video, stream, streamPlayerId) => {
   if (!streamIds.includes(streamId) && !playerIds.includes(streamPlayerId)) {
     let template = document.getElementById('cell-template')
     streamIds.push(streamId)
+    playerIds.push(streamPlayerId)
     const videoCell = document.createElement('div')
     videoCell.setAttribute('player-id', streamPlayerId)
     videoCell.classList.add('cell')
+    if (streamPlayerId == playerId) {
+      videoCell.classList.add('player-cell')
+    }
     videoCell.append(video)
     video.insertAdjacentHTML('beforebegin', template.innerHTML)
     video.srcObject = stream;
@@ -113,11 +118,10 @@ const toggleReset = (element) => {
 };
 
 function toggleDeath() {
-  if(document.getElementById('togglebox').checked)
-  {
+  if (document.getElementById('togglebox').checked) {
     document.getElementById('cell_deathoverlay').style.display = "inline-block";
   }
-  else{
+  else {
     document.getElementById('cell_deathoverlay').style.display = "none";
   }
 };

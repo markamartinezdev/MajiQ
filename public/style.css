@@ -91,7 +91,7 @@ video {
 }
 
 .cell_header_left {
-    flex:1;
+    flex: 1;
 }
 
 .cell_header {
@@ -178,6 +178,11 @@ video {
     width: 1.5rem;
     background-color: salmon;
     border: none;
+    display: none;
+}
+
+.player-cell .cell_playerlife_button {
+    display: block;
 }
 
 .cell_toggledeath {
@@ -198,7 +203,7 @@ video {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
 }
 
@@ -208,8 +213,8 @@ video {
     left: 50%;
     font-size: 50px;
     color: white;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 .options {
@@ -294,18 +299,18 @@ video {
     width: 50px;
     margin: 0 0.5rem;
     cursor: pointer;
-  }
-  
-  .collapse-button:hover {
+}
+
+.collapse-button:hover {
     background-color: #ef0c0c;
-  }
-  
-  .collapse-button.collapsed {
+}
+
+.collapse-button.collapsed {
     display: none;
-  }
-  
-  .collapsed {
+}
+
+.collapsed {
     display: none;
-  }
-  
+}
+
 /* #endregion */
