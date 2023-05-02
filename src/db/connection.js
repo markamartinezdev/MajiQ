@@ -1,7 +1,7 @@
 
 var cassandra = require('cassandra-driver');
 var async = require('async');
-//THIS ISNT FUNCTIONAL!!! WE'VE MOVED TO MONGO DB... DON'T WASTE YOUR TIME :d
+
 var authProvider = new cassandra.auth.PlainTextAuthProvider('scylla', process.env.NODE_SCYLLA_PW)
 
 async function connect() {

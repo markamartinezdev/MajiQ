@@ -1,84 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>MajiQ - Where card?</title>
-		<link link rel="stylesheet" type="text/css" href="/style.css" />
-		<script src="/socket.io/socket.io.js"></script>
-		<script
-			src="https://kit.fontawesome.com/bcc4f68eae.js"
-			crossorigin="anonymous"
-		></script>
-		<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
-		<script>
-			const ROOM_ID = "<%= roomId %>";
-			const PORT = "<%= port %>";
-		</script>
-	</head>
 
-	<body>
-		<div class="header">
-			<div class="logo">
-				<img src="https://i.postimg.cc/hj3xpJ3M/majiq.png" alt="MajiQ DICK" />
-			</div>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MajiQ - Where card?</title>
+	<link link rel="stylesheet" type="text/css" href="/style.css" />
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://kit.fontawesome.com/bcc4f68eae.js" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+	<script>
+		const ROOM_ID = "<%= roomId %>";
+		const PORT = "<%= port %>";
+	</script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="logo">
+			<img src="https://i.postimg.cc/hj3xpJ3M/majiq.png" alt="MajiQ DICK" />
 		</div>
-		<div class="main">
-			<div class="main__left">
-				<div class="videos__group">
-					<div id="video-grid"></div>
-				</div>
-				<div class="options">
-					<div class="options__left">
-						<button
-							class="options__button"
-							id="toggle-video-button"
-							onclick="toggleVideo(this)"
-						>
-							<i class="fa fa-video-camera" aria-hidden="true"></i>
-						</button>
-						<button class="options__button" onclick="toggleMute(this)">
-							<i class="fa fa-microphone" aria-hidden="true"></i>
-						</button>
-						<button class="options__button" onclick="toggleReset(this)">
-							<i class="fa fa-refresh" aria-hidden="true"></i>
-						</button>
-						<button class="options__button" onclick="toggleDeath(this)">
-							<i class="fa fa-skull" aria-hidden="true"></i>
-						</button>
-					</div>
-					<div class="options__right">
-						<div
-							class="collapse-button"
-							data-target="main__right"
-							onclick="toggleCollapse(document.querySelector('.main__right'), this)"
-						>
-							<i class="fas fa-comment"></i>
-						</div>
-					</div>
-				</div>
+	</div>
+	<div class="main">
+		<div class="main__left">
+			<div class="videos__group">
+				<div id="video-grid"></div>
 			</div>
-			<div class="main__right">
-				<div class="collapse-content">
-					<ul class="messages"></ul>
-					<div id="searchPopup">
-						<input type="text" id="searchTerm" />
-						<button onclick="search(this)">Search</button>
-						<button onclick="closePopup(this)">Close</button>
-						<div id="results"></div>
+			<div class="options">
+				<div class="options__left">
+					<button class="options__button" id="toggle-video-button" onclick="toggleVideo(this)">
+						<i class="fa fa-video-camera" aria-hidden="true"></i>
+					</button>
+					<button class="options__button" onclick="toggleMute(this)">
+						<i class="fa fa-microphone" aria-hidden="true"></i>
+					</button>
+					<button class="options__button" onclick="toggleReset(this)">
+						<i class="fa fa-refresh" aria-hidden="true"></i>
+					</button>
+					<button class="options__button" onclick="toggleDeath(this)">
+						<i class="fa fa-skull" aria-hidden="true"></i>
+					</button>
+				</div>
+				<div class="options__right">
+					<div class="collapse-button" data-target="main__right"
+						onclick="toggleCollapse(document.querySelector('.main__right'), this)">
+						<i class="fas fa-comment"></i>
 					</div>
-					<ul class="messages"></ul>
 				</div>
 			</div>
 		</div>
-		<template id="cell-template">
+		<div class="main__right">
+			<div class="collapse-content">
+				<ul class="messages"></ul>
+				<div id="searchPopup">
+					<input type="text" id="searchTerm">
+					<button onclick="search(this)">Search</button>
+					<button onclick="closePopup(this)">Close</button>
+					<div id="results"></div>
+				</div>
+				<ul class="messages"></ul>
+			</div>
+		</div>
+	</div>
+	<template id="cell-template">
+		<div class="cell">
 			<div class="cell_header">
 				<div class="cell_header_left">
-					<div class="cell_playername" contenteditable="true">
-						Enter player name
-					</div>
+					<div class="cell_playername" contenteditable="true">Enter player name</div>
 					<div id="searchPopup">
-						<input type="text" id="searchTerm" />
+						<input type="text" id="searchTerm">
 						<button onclick="search()">Search</button>
 						<button onclick="closePopup()">Close</button>
 						<div id="results"></div>
@@ -89,13 +79,7 @@
 						<button class="cell_playerlife_button" onclick="reduceLife(this)">
 							<i class="fa-solid fa-minus"></i>
 						</button>
-						<input
-							type="number"
-							class="cell_playerlife_value"
-							value="40"
-							min="-1"
-							max="999"
-						/>
+						<input type="number" class="cell_playerlife_value" value="40" min="-1" max="999" />
 						<button class="cell_playerlife_button" onclick="addLife(this)">
 							<i class="fa-solid fa-plus"></i>
 						</button>
@@ -116,4 +100,3 @@
 <script src="/script.js"></script>
 
 </html>
-
