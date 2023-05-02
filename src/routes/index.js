@@ -4,6 +4,7 @@ const mgt = require('../game/cards.js')
 
 const PORT = process.env.NODE_PORT ?? 3030
 router.get("/room/:room", (req, res, next) => {
+    console.log(Number(process.env.NODE_PROD), Number(process.env.NODE_PROD) ? '' : PORT)
     res.render("room", { roomId: req.params.room, port: Number(process.env.NODE_PROD) ? '' : PORT });
 });
 
