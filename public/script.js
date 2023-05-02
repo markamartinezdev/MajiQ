@@ -1,18 +1,20 @@
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
-let Template = document.getElementById('cell-template')
-let template = Template.content.valueOf()
-let myVideo = null
+const myVideo = document.createElement("video");
+myVideo.muted = true;
 var peer = new Peer(undefined, {
   path: "/peerjs",
   host: "/",
   port: PORT
 });
-const playerIds = []
 let playerName = ''
-let playerId = ''
 let playerLife = 40
 let myVideoStream;
+let playerId = sessionStorage.getItem("userId")
+const playerIds = []
+const streamIds = []
+playerId = playerId ?? Date.now()
+sessionStorage.setItem('userId', playerId)
 navigator.mediaDevices
   .getUserMedia({
     audio: true,
@@ -23,62 +25,49 @@ navigator.mediaDevices
   })
   .then((stream) => {
     myVideoStream = stream;
-    template = Template.innerHTML
-    addVideoStream(template, stream);
+    addVideoStream(myVideo, stream, playerId);
     peer.on("call", (call) => {
       call.answer(stream);
-      template = Template.innerHTML
+      const video = document.createElement("video");
       call.on("stream", (userVideoStream) => {
-        addVideoStream(template, userVideoStream);
+        debugger
+        addVideoStream(video, userVideoStream, playerId);
       });
     });
-    socket.on("user-connected", (userId) => {
-      connectToNewUser(userId, stream);
+    socket.on("user-connected", ({ userId, playerId: streamPlayerId }) => {
+      connectToNewUser(userId, stream, streamPlayerId);
     });
   });
-const connectToNewUser = (userId, stream) => {
+const connectToNewUser = (userId, stream, streamPlayerId) => {
   const call = peer.call(userId, stream);
-  template = Template.innerHTML
+  const video = document.createElement("video");
   call.on("stream", (userVideoStream) => {
-    if (!playerIds.includes(userId)) {
-      playerIds.push(userId)
-      addVideoStream(template, userVideoStream);
-    }
+    addVideoStream(video, userVideoStream, streamPlayerId);
   });
 };
+
 peer.on("open", (id) => {
-  // Get saved data from sessionStorage
-  socket.emit("join-room", ROOM_ID, id);
+  socket.emit("join-room", ROOM_ID, id, playerId);
 });
 
-const addVideoStream = (template, stream) => {
-  const videoCell = document.createElement('div')
-  videoCell.innerHTML = template
-  const video = videoCell.querySelector('video');
-  video.srcObject = stream;
-  video.muted = true;
-  // video.setAttribute('player-id', playerId)
-  video.addEventListener("loadedmetadata", () => {
-    video.play();
-    videoGrid.append(videoCell);
-  });
-  // if (!stream) {
-  //   video.style.display = 'none';
-  //   // video.setAttribute('player-id', playerId)
-  //   const blankBox = document.createElement('div');
-  //   blankBox.classList.add('blank-box');
-  //   template.appendChild(blankBox);
-  // } else {
-  //   video.muted = true;
-  //   video.srcObject = stream;
-  //   // video.setAttribute('player-id', playerId)
-  //   video.addEventListener("loadedmetadata", () => {
-  //     video.play();
-  //     videoGrid.append(videoCell);
-  //   });
-  // }
+const addVideoStream = (video, stream, streamPlayerId) => {
+  const streamId = stream.id
+  if (!streamIds.includes(streamId) && !playerIds.includes(streamPlayerId)) {
+    let template = document.getElementById('cell-template')
+    streamIds.push(streamId)
+    const videoCell = document.createElement('div')
+    videoCell.setAttribute('player-id', streamPlayerId)
+    videoCell.classList.add('cell')
+    videoCell.append(video)
+    video.insertAdjacentHTML('beforebegin', template.innerHTML)
+    video.srcObject = stream;
+    video.classList.add('cell_video')
+    video.addEventListener("loadedmetadata", () => {
+      video.play();
+      videoGrid.append(videoCell);
+    });
+  }
 };
-
 
 const videoButton = document.getElementById('toggle-video-button');
 videoButton.classList.add('active');
@@ -217,7 +206,7 @@ function toggleCollapse(element) {
 }
 
 // Add event listener to collapse button
-document.getElementById('collapse-button').addEventListener('click', toggleCollapse);
+// document.getElementById('collapse-button').addEventListener('click', toggleCollapse);
 
 //Button Customization
 function toggleCollapse(element, button) {
@@ -235,14 +224,14 @@ function toggleCollapse(element, button) {
 }
 
 //Card Search
-function search() {
+function search(button) {
   // Get the search term from the text field
   var searchTerm = document.getElementById("searchTerm").value;
 
   // Make a request to the search endpoint
   var xhr = new XMLHttpRequest();
   xhr.open("GET", "https://mtg.pingadulce.com/card?searchTerm=" + searchTerm);
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (xhr.status === 200) {
       // The request was successful, so parse the results
       var results = JSON.parse(xhr.responseText);
@@ -279,10 +268,10 @@ function closePopup() {
 }
 
 // When the user clicks on a result, add it to the messages ul
-$("#results").on("click", ".result", function() {
-  var title = $(this).text();
-  var li = document.createElement("li");
-  li.textContent = title;
-  $(".messages").append(li);
-  closePopup();
-});
+// $("#results").on("click", ".result", function () {
+//   var title = $(this).text();
+//   var li = document.createElement("li");
+//   li.textContent = title;
+//   $(".messages").append(li);
+//   closePopup();
+// });
