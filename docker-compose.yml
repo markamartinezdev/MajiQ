@@ -9,7 +9,7 @@ services:
     restart: 'on-failure:10'
     container_name: majiq
     volumes:
-      - './MajiQ/.env:/usr/src/app/.env'
+      - '.env:/usr/src/app/.env'
 
 networks:
   nginx_default:
