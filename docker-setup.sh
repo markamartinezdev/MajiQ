@@ -8,3 +8,4 @@ docker-compose up -d
 
 # Finished
 echo "Docker setup completed."
+git st
