@@ -54,7 +54,7 @@ peer.on("open", (id) => {
 const addVideoStream = (video, stream, streamPlayerId) => {
   const streamId = stream.id
   if (!streamIds.includes(streamId) && !playerIds.includes(streamPlayerId)) {
-    const columnsCount = playerIds.length > 4 ? 3 : 2
+    const columnsCount = playerIds.length < 2 ? 1 : playerIds.length > 4 ? 3 : 2
     r.style.setProperty('--columns', columnsCount)
     let template = document.getElementById('cell-template')
     streamIds.push(streamId)
