@@ -252,7 +252,7 @@ function closePopup() {
   // Hide the popup
   $("#searchPopup").hide();
 }
-
+//hi
 // When the user clicks on a result, add it to the messages ul
 // $("#results").on("click", ".result", function () {
 //   var title = $(this).text();
