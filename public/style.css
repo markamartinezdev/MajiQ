@@ -82,13 +82,13 @@ video {
 #video-grid {
     display: flex;
     gap: 1rem;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
 .cell {
     position: relative;
-    width: calc(calc(100% / var(--columns)) - 0.5rem);
+    width: calc(calc(100% / var(--columns)) - calc(1rem / var(--columns)));
 }
 
 .cell_header_left {
