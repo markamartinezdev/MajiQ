@@ -89,6 +89,8 @@ video {
 .cell {
     position: relative;
     width: calc(calc(100% / var(--columns)) - calc(1rem / var(--columns)));
+    border-radius: 1rem;
+    overflow: hidden;
 }
 
 .cell_header_left {
