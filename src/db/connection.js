@@ -1,14 +1,16 @@
 
 require('dotenv').config()
-const { MongoClient } = rquire('mongodb')
+const mongoose = require('mongoose');
 
 async function connectToCluster() {
     let mongoClient;
-    const uri = `mongodb+srv://${process.env.NODE_DB_USER}:${process.env.NODE_DB_PASSWORD}@${process.env.NODE_DB_URL}/test?retryWrites=true&w=majority"`;
+    const uri = `mongodb://${encodeURIComponent(process.env.NODE_DB_USER)}:${encodeURIComponent(process.env.NODE_DB_PASSWORD)}@${process.env.NODE_DB_URL}`;
     try {
-        mongoClient = new MongoClient(uri);
         console.log('Connecting to MongoDB cluster...');
-        await mongoClient.connect();
+        mongoClient = await mongoose.connect(`mongodb://${(process.env.NODE_DB_URL)}/newCollection`, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
         console.log('Successfully connected to MongoDB!');
         return mongoClient;
     } catch (error) {
@@ -17,6 +19,20 @@ async function connectToCluster() {
     }
 }
 
+async function createSchema() {
+    const Schema = mongoose.Schema;
+    const ObjectId = Schema.ObjectId;
+
+    const BlogPost = new Schema({
+        author: ObjectId,
+        title: String,
+        body: String,
+        date: Date
+    });
+    return BlogPost
+}
+
 module.exports = {
+    createSchema,
     connectToCluster
 }
