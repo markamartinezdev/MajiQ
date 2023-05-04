@@ -1,29 +1,22 @@
 
-var cassandra = require('cassandra-driver');
-var async = require('async');
-//THIS ISNT FUNCTIONAL!!! WE'VE MOVED TO MONGO DB... DON'T WASTE YOUR TIME :d
-var authProvider = new cassandra.auth.PlainTextAuthProvider('scylla', process.env.NODE_SCYLLA_PW)
+require('dotenv').config()
+const { MongoClient } = rquire('mongodb')
 
-async function connect() {
-    const cluster = new cassandra.Client({
-        contactPoints: [process.env.NODE_SCYLLA_NODE_1, process.env.NODE_SCYLLA_NODE_2, process.env.NODE_SCYLLA_NODE_3],
-        localDataCenter: process.env.NODE_SCYLLA_DATA_CENTER,
-        keyspace: process.env.NODE_SCYLLA_NODE_KEYSPACE,
-        authProvider
-    })
-    return cluster
+async function connectToCluster() {
+    let mongoClient;
+    const uri = `mongodb+srv://${process.env.NODE_DB_USER}:${process.env.NODE_DB_PASSWORD}@${process.env.NODE_DB_URL}/test?retryWrites=true&w=majority"`;
+    try {
+        mongoClient = new MongoClient(uri);
+        console.log('Connecting to MongoDB cluster...');
+        await mongoClient.connect();
+        console.log('Successfully connected to MongoDB!');
+        return mongoClient;
+    } catch (error) {
+        console.error('Connection to MongoDB failed!', error);
+        process.exit();
+    }
 }
 
-async function createTabe() {
-    const query = `
-    CREATE TABLE IF NOT EXISTS games.game
-    (
-        game_id UUID,
-        address TEXT,
-        name    TEXT,
-        PRIMARY KEY (game_id)
-    );
-    `
+module.exports = {
+    connectToCluster
 }
-
-

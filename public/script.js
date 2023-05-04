@@ -48,7 +48,7 @@ const connectToNewUser = (userId, stream, streamPlayerId) => {
 };
 
 peer.on("open", (id) => {
-  socket.emit("join-room", ROOM_ID, id, playerId);
+  socket.emit("join-room", { roomId: ROOM_ID, userId: id, playerId });
 });
 
 const addVideoStream = (video, stream, streamPlayerId) => {
@@ -65,10 +65,10 @@ const addVideoStream = (video, stream, streamPlayerId) => {
     if (streamPlayerId == playerId) {
       videoCell.classList.add('player-cell')
     }
-    videoCell.append(video)
-    video.insertAdjacentHTML('beforebegin', template.innerHTML)
     video.srcObject = stream;
     video.classList.add('cell_video')
+    videoCell.append(video)
+    video.insertAdjacentHTML('beforebegin', template.innerHTML)
     video.addEventListener("loadedmetadata", () => {
       video.play();
       videoGrid.append(videoCell);

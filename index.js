@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.redirect(`/room/${uuidv4()}`);
 });
 io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId, playerId) => {
+  socket.on("join-room", ({ roomId, userId, playerId }) => {
     socket.join(roomId);
     const broadcast = socket.to(roomId)
     broadcast.emit("user-connected", { userId, playerId });
