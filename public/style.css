@@ -146,7 +146,7 @@ video {
     text-align: right;
 }
 
-.cell_playerlife .cell_playerlife_value {
+.cell_playerlife_value {
     position: relative;
     padding: 0;
     border: none;
